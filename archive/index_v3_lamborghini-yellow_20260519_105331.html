@@ -1,0 +1,1829 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aria — Discover. Listen. Feel.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sofia+Sans:ital,wght@0,1..1000;1,1..1000&display=swap" rel="stylesheet">
+  <style>
+    /* ==========================================
+       DESIGN TOKENS — Mastercard-inspired system
+    ========================================== */
+    :root {
+      --canvas-cream:        #F3F0EE;
+      --lifted-cream:        #FCFBFA;
+      --ink-black:           #141413;
+      --charcoal:            #262627;
+      --signal-orange:       #CF4500;
+      --light-signal-orange: #F37338;
+      --white:               #FFFFFF;
+      --slate-gray:          #696969;
+      --dust-taupe:          #D1CDC7;
+      --link-blue:           #3860BE;
+    }
+
+    /* ==========================================
+       RESET & BASE
+    ========================================== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--canvas-cream);
+      color: var(--ink-black);
+      font-family: 'Sofia Sans', Arial, sans-serif;
+      font-weight: 450;
+      font-size: 16px;
+      line-height: 1.4;
+      min-height: 100vh;
+      padding-bottom: 112px;
+    }
+
+    /* ==========================================
+       EYEBROW LABEL
+    ========================================== */
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.56px;
+      text-transform: uppercase;
+      color: var(--ink-black);
+    }
+
+    .eyebrow-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--light-signal-orange);
+      flex-shrink: 0;
+      display: inline-block;
+    }
+
+    /* ==========================================
+       BUTTONS
+    ========================================== */
+    .btn-primary {
+      background: var(--ink-black);
+      color: var(--canvas-cream);
+      border: 1.5px solid var(--ink-black);
+      border-radius: 20px;
+      padding: 10px 28px;
+      font-family: 'Sofia Sans', Arial, sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: -0.32px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: opacity 0.2s;
+      white-space: nowrap;
+    }
+    .btn-primary:hover { opacity: 0.78; }
+
+    .btn-secondary {
+      background: var(--white);
+      color: var(--ink-black);
+      border: 1.5px solid var(--ink-black);
+      border-radius: 20px;
+      padding: 10px 28px;
+      font-family: 'Sofia Sans', Arial, sans-serif;
+      font-size: 16px;
+      font-weight: 450;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+    .btn-secondary:hover { background: var(--canvas-cream); }
+
+    /* ==========================================
+       FLOATING NAV PILL
+    ========================================== */
+    .nav-container {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      padding: 24px 48px 0;
+      pointer-events: none;
+    }
+
+    .nav-pill {
+      background: var(--white);
+      border-radius: 999px;
+      padding: 13px 32px;
+      display: flex;
+      align-items: center;
+      box-shadow: rgba(0,0,0,0.04) 0px 4px 24px 0px;
+      pointer-events: all;
+      width: 100%;
+      max-width: 1000px;
+      gap: 0;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--ink-black);
+      font-weight: 700;
+      font-size: 22px;
+      letter-spacing: -0.5px;
+      flex-shrink: 0;
+    }
+
+    .nav-logo-mark {
+      width: 36px;
+      height: 36px;
+      background: var(--ink-black);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--canvas-cream);
+      font-size: 17px;
+      line-height: 1;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      flex: 1;
+      justify-content: center;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--ink-black);
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: -0.48px;
+      transition: opacity 0.2s;
+    }
+    .nav-links a:hover { opacity: 0.5; }
+    .nav-links a.active { border-bottom: 1.5px solid var(--ink-black); }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .nav-icon-btn {
+      background: none;
+      border: 1.5px solid var(--ink-black);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ink-black);
+      transition: background 0.2s;
+    }
+    .nav-icon-btn:hover { background: var(--canvas-cream); }
+    .nav-icon-btn svg { width: 17px; height: 17px; }
+
+    /* ==========================================
+       HERO SECTION
+    ========================================== */
+    .hero-section {
+      padding: 116px 48px 0;
+    }
+
+    .hero-frame {
+      border-radius: 40px;
+      background: #0f0f1a;
+      overflow: hidden;
+      position: relative;
+      min-height: 62vh;
+      display: flex;
+      align-items: flex-end;
+      box-shadow: rgba(0,0,0,0.08) 0px 24px 48px 0px;
+    }
+
+    /* Atmospheric glow blobs */
+    .hero-glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      pointer-events: none;
+    }
+    .hero-glow-1 {
+      width: 560px; height: 560px;
+      background: radial-gradient(circle, rgba(109,40,217,0.45) 0%, transparent 70%);
+      top: -160px; right: 12%;
+    }
+    .hero-glow-2 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(243,115,56,0.3) 0%, transparent 70%);
+      bottom: -60px; right: 28%;
+    }
+    .hero-glow-3 {
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(59,130,246,0.2) 0%, transparent 70%);
+      top: 40px; left: 10%;
+    }
+
+    /* Pill-shaped artist visual */
+    .hero-visual {
+      position: absolute;
+      right: 72px;
+      bottom: 0;
+      width: 300px;
+      height: 440px;
+      border-radius: 999px 999px 0 0;
+      background: linear-gradient(to top, #1a0050, #5b21b6, #a78bfa 90%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 100px;
+      overflow: hidden;
+    }
+    .hero-visual::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 55%, rgba(15,15,26,0.85) 100%);
+    }
+    .hero-visual-emoji {
+      position: relative;
+      z-index: 1;
+      margin-top: 40px;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 68px 60px;
+      flex: 1;
+      max-width: 640px;
+    }
+
+    .hero-eyebrow {
+      margin-bottom: 18px;
+      color: var(--light-signal-orange);
+    }
+    .hero-eyebrow .eyebrow-dot { background: var(--light-signal-orange); }
+
+    .hero-title {
+      font-size: 64px;
+      font-weight: 500;
+      line-height: 1;
+      letter-spacing: -1.28px;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+
+    .hero-subtitle {
+      font-size: 16px;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 36px;
+      max-width: 400px;
+      line-height: 1.55;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 44px;
+    }
+
+    .hero-ctas .btn-primary {
+      background: var(--white);
+      color: var(--ink-black);
+      border-color: var(--white);
+    }
+    .hero-ctas .btn-secondary {
+      background: transparent;
+      color: var(--white);
+      border-color: rgba(255,255,255,0.35);
+    }
+    .hero-ctas .btn-secondary:hover { background: rgba(255,255,255,0.1); }
+
+    .hero-stats {
+      display: flex;
+      gap: 36px;
+    }
+
+    .hero-stat-value {
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: -0.5px;
+      line-height: 1;
+    }
+    .hero-stat-label {
+      font-size: 11px;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      margin-top: 3px;
+    }
+
+    /* ==========================================
+       FEATURED ARTISTS SECTION
+    ========================================== */
+    .artists-section {
+      padding: 100px 48px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ghost-watermark {
+      position: absolute;
+      font-size: 128px;
+      font-weight: 500;
+      letter-spacing: -2.56px;
+      color: #E8E2DA;
+      top: 56px;
+      left: -12px;
+      pointer-events: none;
+      user-select: none;
+      line-height: 1;
+      white-space: nowrap;
+      z-index: 0;
+    }
+
+    .artists-constellation {
+      display: flex;
+      align-items: flex-end;
+      position: relative;
+      margin-top: 56px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding-bottom: 8px;
+      gap: 0;
+    }
+    .artists-constellation::-webkit-scrollbar { display: none; }
+
+    /* SVG orbital arcs */
+    .orbital-svg {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Artist cards — staggered vertical rhythm */
+    .artist-card {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      position: relative;
+      z-index: 1;
+      transition: opacity 0.2s;
+    }
+    .artist-card:hover { opacity: 0.85; }
+
+    .artist-card:nth-child(1) { padding: 0 48px 0 0;  margin-top: 72px; }
+    .artist-card:nth-child(2) { padding: 0 48px;       margin-top: 0; }
+    .artist-card:nth-child(3) { padding: 0 48px;       margin-top: 88px; }
+    .artist-card:nth-child(4) { padding: 0 48px;       margin-top: 24px; }
+    .artist-card:nth-child(5) { padding: 0 0 0 48px;   margin-top: 64px; }
+
+    .artist-portrait-wrap {
+      position: relative;
+      width: 270px;
+      height: 270px;
+    }
+
+    .artist-portrait {
+      width: 270px;
+      height: 270px;
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: rgba(0,0,0,0.08) 0px 24px 48px 0px;
+    }
+
+    .artist-portrait-inner {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 72px;
+      position: relative;
+    }
+    /* Soft edge fade into cream canvas */
+    .artist-portrait-inner::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle at 65% 65%, transparent 42%, var(--canvas-cream) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .artist-portrait-inner img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+    }
+
+    .artist-card:nth-child(1) .artist-portrait-inner { background: linear-gradient(135deg,#FF6B6B,#FF8E53 50%,#FFC107); }
+    .artist-card:nth-child(2) .artist-portrait-inner { background: linear-gradient(135deg,#4A0E8F,#7B2D8B 40%,#C2185B); }
+    .artist-card:nth-child(3) .artist-portrait-inner { background: linear-gradient(135deg,#004D40,#00695C 50%,#26A69A); }
+    .artist-card:nth-child(4) .artist-portrait-inner { background: linear-gradient(135deg,#B8860B,#DAA520 50%,#F0C040); }
+    .artist-card:nth-child(5) .artist-portrait-inner { background: linear-gradient(135deg,#1A237E,#283593 50%,#5C6BC0); }
+
+    /* Satellite CTA — white circle docked bottom-right */
+    .satellite-cta {
+      position: absolute;
+      bottom: 8px;
+      right: -10px;
+      width: 52px;
+      height: 52px;
+      background: var(--white);
+      border-radius: 50%;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: rgba(0,0,0,0.12) 0px 4px 16px;
+      cursor: pointer;
+      color: var(--ink-black);
+      transition: transform 0.2s;
+      z-index: 2;
+    }
+    .satellite-cta:hover { transform: scale(1.12); }
+    .satellite-cta svg { width: 20px; height: 20px; }
+
+    .artist-info {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .artist-cat {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.56px;
+      text-transform: uppercase;
+      color: var(--slate-gray);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .artist-cat::before {
+      content: '';
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--light-signal-orange);
+      display: inline-block;
+    }
+
+    .artist-name {
+      font-size: 24px;
+      font-weight: 500;
+      letter-spacing: -0.48px;
+      color: var(--ink-black);
+    }
+
+    .artist-genre {
+      font-size: 14px;
+      color: var(--slate-gray);
+      margin-top: 4px;
+    }
+
+    /* ==========================================
+       NEW RELEASES — PILL CAROUSEL
+    ========================================== */
+    .releases-section {
+      background: var(--lifted-cream);
+      padding: 96px 48px;
+    }
+
+    .section-eyebrow { margin-bottom: 12px; }
+
+    .section-title {
+      font-size: 36px;
+      font-weight: 500;
+      letter-spacing: -0.72px;
+      color: var(--ink-black);
+      margin-bottom: 48px;
+    }
+
+    .carousel-track {
+      display: flex;
+      gap: 24px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding-bottom: 8px;
+    }
+    .carousel-track::-webkit-scrollbar { display: none; }
+
+    /* Pill-shaped release card */
+    .release-card {
+      flex-shrink: 0;
+      width: 270px;
+      height: 390px;
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.25s;
+      box-shadow: rgba(0,0,0,0.08) 0px 24px 48px 0px;
+    }
+    .release-card:hover { transform: scale(1.025); }
+
+    .release-card-bg {
+      position: absolute; inset: 0;
+      background-size: cover;
+      background-position: center top;
+      background-color: var(--ink-black);
+    }
+
+    .release-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 38%, rgba(0,0,0,0.72) 100%);
+    }
+
+    .release-content {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 28px 28px 36px;
+    }
+
+    .release-chip {
+      display: inline-block;
+      background: var(--white);
+      color: var(--ink-black);
+      border-radius: 999px;
+      padding: 4px 14px;
+      font-size: 12px;
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+
+    .release-title {
+      font-size: 20px;
+      font-weight: 500;
+      letter-spacing: -0.4px;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 4px;
+    }
+
+    .release-artist {
+      font-size: 13px;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 18px;
+    }
+
+    .release-play-btn {
+      background: var(--white);
+      color: var(--ink-black);
+      border: none;
+      border-radius: 40px;
+      padding: 9px 22px;
+      font-family: 'Sofia Sans', Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .carousel-controls {
+      display: flex;
+      gap: 10px;
+      margin-top: 36px;
+    }
+
+    .carousel-btn {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      border: 1.5px solid var(--ink-black);
+      background: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ink-black);
+      transition: background 0.2s, color 0.2s;
+    }
+    .carousel-btn:hover { background: var(--ink-black); color: var(--white); }
+    .carousel-btn svg { width: 20px; height: 20px; }
+
+    /* ==========================================
+       TRENDING CHARTS
+    ========================================== */
+    .charts-section { padding: 96px 48px; }
+
+    .charts-title {
+      font-size: 36px;
+      font-weight: 500;
+      letter-spacing: -0.72px;
+      margin-top: 12px;
+      margin-bottom: 48px;
+    }
+
+    .charts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 80px;
+    }
+
+    .chart-item {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--dust-taupe);
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .chart-item:hover { opacity: 0.65; }
+
+    .chart-rank {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--slate-gray);
+      width: 22px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .chart-art {
+      width: 48px; height: 48px;
+      border-radius: 10px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      overflow: hidden;
+    }
+
+    .chart-art img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .chart-info { flex: 1; min-width: 0; }
+
+    .chart-title {
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: -0.32px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .chart-artist {
+      font-size: 13px;
+      color: var(--slate-gray);
+      margin-top: 2px;
+    }
+
+    .chart-duration {
+      font-size: 13px;
+      color: var(--slate-gray);
+      flex-shrink: 0;
+    }
+
+    .chart-play-btn {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--dust-taupe);
+      background: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ink-black);
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+      flex-shrink: 0;
+    }
+    .chart-play-btn:hover { background: var(--ink-black); color: var(--white); border-color: var(--ink-black); }
+    .chart-play-btn svg { width: 13px; height: 13px; }
+
+    /* ==========================================
+       FOOTER — Ink Black
+    ========================================== */
+    .site-footer {
+      background: var(--ink-black);
+      color: var(--white);
+      padding: 80px 100px 56px;
+    }
+
+    .footer-headline {
+      font-size: 36px;
+      font-weight: 500;
+      letter-spacing: -0.72px;
+      max-width: 480px;
+      margin-bottom: 60px;
+      line-height: 1.25;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(255,255,255,0.18);
+    }
+
+    .footer-col-header {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.56px;
+      text-transform: uppercase;
+      color: var(--slate-gray);
+      margin-bottom: 20px;
+    }
+
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+
+    .footer-links a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 450;
+      line-height: 1.4;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: opacity 0.2s;
+    }
+    .footer-links a:hover { opacity: 0.6; }
+
+    .footer-bottom {
+      margin-top: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-copyright { font-size: 13px; color: var(--slate-gray); }
+
+    .footer-social { display: flex; gap: 10px; }
+
+    .footer-social-btn {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.28);
+      background: none;
+      color: var(--white);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.2s;
+    }
+    .footer-social-btn:hover { border-color: var(--white); }
+    .footer-social-btn svg { width: 15px; height: 15px; }
+
+    /* ==========================================
+       STICKY MUSIC PLAYER
+    ========================================== */
+    .player {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 999;
+      background: var(--white);
+      border-radius: 999px;
+      padding: 12px 28px;
+      box-shadow: rgba(0,0,0,0.14) 0px 8px 40px 0px;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      width: calc(100% - 96px);
+      max-width: 920px;
+    }
+
+    /* Track info — left side */
+    .player-track {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 0 0 210px;
+    }
+
+    .player-art {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      overflow: hidden;
+    }
+
+    .player-art img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 50%; }
+
+    .art-1 { background: linear-gradient(135deg,#FF6B6B,#FFC107); }
+    .art-2 { background: linear-gradient(135deg,#4A0E8F,#a78bfa); }
+    .art-3 { background: linear-gradient(135deg,#004D40,#26A69A); }
+    .art-4 { background: linear-gradient(135deg,#B8860B,#F0C040); }
+    .art-5 { background: linear-gradient(135deg,#1A237E,#5C6BC0); }
+    .art-6 { background: linear-gradient(135deg,#880E4F,#F06292); }
+
+    .player-track-info { flex: 1; min-width: 0; }
+
+    .player-track-title {
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: -0.28px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .player-track-artist {
+      font-size: 12px;
+      color: var(--slate-gray);
+      margin-top: 1px;
+    }
+
+    .player-heart {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--slate-gray);
+      display: flex;
+      align-items: center;
+      transition: color 0.2s;
+      flex-shrink: 0;
+    }
+    .player-heart.liked { color: var(--signal-orange); }
+    .player-heart svg { width: 18px; height: 18px; }
+
+    /* Controls — center */
+    .player-controls {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+    }
+
+    .player-buttons {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .ctrl-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--ink-black);
+      display: flex;
+      align-items: center;
+      transition: opacity 0.2s;
+    }
+    .ctrl-btn:hover { opacity: 0.55; }
+    .ctrl-btn svg { width: 20px; height: 20px; }
+
+    .ctrl-btn-play {
+      width: 44px; height: 44px;
+      background: var(--ink-black);
+      border-radius: 50%;
+      color: var(--white);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.2s;
+    }
+    .ctrl-btn-play:hover { opacity: 0.78; }
+    .ctrl-btn-play svg { width: 17px; height: 17px; }
+
+    .player-progress {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .player-time {
+      font-size: 12px;
+      color: var(--slate-gray);
+      width: 34px;
+      flex-shrink: 0;
+    }
+    .player-time:last-child { text-align: right; }
+
+    .progress-bar {
+      flex: 1;
+      height: 4px;
+      background: var(--dust-taupe);
+      border-radius: 999px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--ink-black);
+      border-radius: 999px;
+      width: 0%;
+      transition: width 0.9s linear;
+      position: relative;
+    }
+    .progress-fill::after {
+      content: '';
+      width: 12px; height: 12px;
+      background: var(--ink-black);
+      border-radius: 50%;
+      position: absolute;
+      right: -6px; top: 50%;
+      transform: translateY(-50%);
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+    .progress-bar:hover .progress-fill::after { opacity: 1; }
+
+    /* Volume — right */
+    .player-volume {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 0 0 110px;
+    }
+
+    .vol-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--ink-black);
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .vol-btn svg { width: 18px; height: 18px; }
+
+    .vol-bar {
+      flex: 1;
+      height: 4px;
+      background: var(--dust-taupe);
+      border-radius: 999px;
+      cursor: pointer;
+    }
+    .vol-fill {
+      height: 100%;
+      background: var(--ink-black);
+      border-radius: 999px;
+      width: 70%;
+    }
+
+    /* Now-playing animation bars */
+    .playing-bars {
+      display: none;
+      gap: 2px;
+      align-items: flex-end;
+      height: 16px;
+    }
+    .playing-bars.active { display: flex; }
+
+    .pbar {
+      width: 3px;
+      background: var(--light-signal-orange);
+      border-radius: 2px;
+      animation: pbarBounce 0.7s ease-in-out infinite alternate;
+    }
+    .pbar:nth-child(1) { height: 6px;  animation-delay: 0s; }
+    .pbar:nth-child(2) { height: 14px; animation-delay: 0.18s; }
+    .pbar:nth-child(3) { height: 9px;  animation-delay: 0.09s; }
+
+    @keyframes pbarBounce {
+      from { transform: scaleY(0.25); }
+      to   { transform: scaleY(1); }
+    }
+
+    /* ==========================================
+       RESPONSIVE
+    ========================================== */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .hero-section { padding: 96px 24px 0; }
+      .hero-title { font-size: 44px; letter-spacing: -0.9px; }
+      .hero-visual { display: none; }
+      .artists-section, .releases-section, .charts-section { padding-left: 24px; padding-right: 24px; }
+      .charts-grid { grid-template-columns: 1fr; gap: 0; }
+      .site-footer { padding: 60px 24px 40px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .player {
+        left: 12px; right: 12px; bottom: 12px;
+        transform: none;
+        width: auto;
+        border-radius: 24px;
+        padding: 12px 18px;
+        gap: 16px;
+      }
+      .player-volume { display: none; }
+      .player-track { flex: 0 0 auto; min-width: 0; max-width: 140px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title { font-size: 36px; }
+      .ghost-watermark { font-size: 80px; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Fade-in entrance */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-content > * {
+      opacity: 0;
+      animation: fadeUp 0.55s ease forwards;
+    }
+    .hero-content > *:nth-child(1) { animation-delay: 0.08s; }
+    .hero-content > *:nth-child(2) { animation-delay: 0.18s; }
+    .hero-content > *:nth-child(3) { animation-delay: 0.28s; }
+    .hero-content > *:nth-child(4) { animation-delay: 0.38s; }
+    .hero-content > *:nth-child(5) { animation-delay: 0.48s; }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       FLOATING NAV PILL
+  ============================================================ -->
+  <header class="nav-container">
+    <nav class="nav-pill">
+      <a href="#" class="nav-logo">
+        <div class="nav-logo-mark">♪</div>
+        Aria
+      </a>
+      <ul class="nav-links">
+        <li><a href="#" class="active">Discover</a></li>
+        <li><a href="#">Browse</a></li>
+        <li><a href="#">Artists</a></li>
+        <li><a href="#charts">Charts</a></li>
+        <li><a href="#">Podcasts</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="nav-icon-btn" aria-label="Search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+          </svg>
+        </button>
+        <button class="nav-icon-btn" aria-label="Account">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/>
+          </svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ============================================================
+         HERO SECTION
+    ============================================================ -->
+    <section class="hero-section">
+      <div class="hero-frame">
+        <div class="hero-glow hero-glow-1"></div>
+        <div class="hero-glow hero-glow-2"></div>
+        <div class="hero-glow hero-glow-3"></div>
+
+        <div class="hero-visual" style="background: url('https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/f2/98/fb/f298fb48-1e0e-6ad4-4cff-fb824b77f02e/15UMGIM59587.rgb.jpg/600x600bb.jpg') center top / cover; overflow: hidden;">
+        </div>
+
+        <div class="hero-content">
+          <div class="eyebrow hero-eyebrow">
+            <span class="eyebrow-dot"></span>FEATURED TRACK
+          </div>
+          <h1 class="hero-title">Hey Jude</h1>
+          <p class="hero-subtitle">
+            The Beatles의 1968년 불멸의 명곡. 7분이 넘는 러닝타임 위에
+            폴 매카트니가 써 내려간 위로의 앤섬.
+          </p>
+          <div class="hero-ctas">
+            <button class="btn-primary" onclick="playTrack(10)">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="5,3 19,12 5,21"/>
+              </svg>
+              Play Now
+            </button>
+            <button class="btn-secondary">Add to Library</button>
+          </div>
+          <div class="hero-stats">
+            <div>
+              <div class="hero-stat-value">7:11</div>
+              <div class="hero-stat-label">Duration</div>
+            </div>
+            <div>
+              <div class="hero-stat-value">1968</div>
+              <div class="hero-stat-label">Released</div>
+            </div>
+            <div>
+              <div class="hero-stat-value">#1</div>
+              <div class="hero-stat-label">9개국 차트</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         FEATURED ARTISTS — Circular Portraits + Orbital Arcs
+    ============================================================ -->
+    <section class="artists-section">
+      <div class="eyebrow section-eyebrow">
+        <span class="eyebrow-dot"></span>FEATURED ARTISTS
+      </div>
+      <div class="ghost-watermark">Artists</div>
+
+      <div class="artists-constellation" id="constellation">
+
+        <!-- Decorative orbital arcs (SVG) -->
+        <svg class="orbital-svg" viewBox="0 0 1500 520" preserveAspectRatio="none">
+          <path d="M 200 250 Q 390 90  500 250" fill="none" stroke="#F37338" stroke-width="1.5" opacity="0.55"/>
+          <path d="M 500 250 Q 680 400 800 210" fill="none" stroke="#F37338" stroke-width="1.5" opacity="0.55"/>
+          <path d="M 800 210 Q 990  60 1100 250" fill="none" stroke="#F37338" stroke-width="1.5" opacity="0.55"/>
+          <path d="M 1100 250 Q 1270 410 1420 220" fill="none" stroke="#F37338" stroke-width="1.5" opacity="0.55"/>
+        </svg>
+
+        <!-- Artist 1: Ella Langley -->
+        <div class="artist-card" onclick="playTrack(0)">
+          <div class="artist-portrait-wrap">
+            <div class="artist-portrait">
+              <div class="artist-portrait-inner">
+                <img src="https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/26/35/03/26350323-d656-4817-49e6-4d658af8363a/196874332917.jpg/600x600bb.jpg" alt="Ella Langley">
+              </div>
+            </div>
+            <button class="satellite-cta" aria-label="Play Ella Langley">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </button>
+          </div>
+          <div class="artist-info">
+            <div class="artist-cat">Artist</div>
+            <div class="artist-name">Ella Langley</div>
+            <div class="artist-genre">Country · Pop</div>
+          </div>
+        </div>
+
+        <!-- Artist 2: Cody Johnson -->
+        <div class="artist-card" onclick="playTrack(4)">
+          <div class="artist-portrait-wrap">
+            <div class="artist-portrait">
+              <div class="artist-portrait-inner">
+                <img src="https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/98/88/4b/98884ba1-fe25-76b8-211f-ebfb3d000fd5/093624838982.jpg/600x600bb.jpg" alt="Cody Johnson">
+              </div>
+            </div>
+            <button class="satellite-cta" aria-label="Play Cody Johnson">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </button>
+          </div>
+          <div class="artist-info">
+            <div class="artist-cat">Artist</div>
+            <div class="artist-name">Cody Johnson</div>
+            <div class="artist-genre">Country · Americana</div>
+          </div>
+        </div>
+
+        <!-- Artist 3: Riley Green -->
+        <div class="artist-card" onclick="playTrack(6)">
+          <div class="artist-portrait-wrap">
+            <div class="artist-portrait">
+              <div class="artist-portrait-inner">
+                <img src="https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/25/fb/18/25fb1804-5862-1936-9d98-d8e7b5513413/24BMR0005677.rgb.jpg/600x600bb.jpg" alt="Riley Green">
+              </div>
+            </div>
+            <button class="satellite-cta" aria-label="Play Riley Green">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </button>
+          </div>
+          <div class="artist-info">
+            <div class="artist-cat">Artist</div>
+            <div class="artist-name">Riley Green</div>
+            <div class="artist-genre">Country · Folk</div>
+          </div>
+        </div>
+
+        <!-- Artist 4: Michael Jackson -->
+        <div class="artist-card" onclick="playTrack(8)">
+          <div class="artist-portrait-wrap">
+            <div class="artist-portrait">
+              <div class="artist-portrait-inner">
+                <img src="https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/32/4f/fd/324ffda2-9e51-8f6a-0c2d-c6fd2b41ac55/074643811224.jpg/600x600bb.jpg" alt="Michael Jackson">
+              </div>
+            </div>
+            <button class="satellite-cta" aria-label="Play Michael Jackson">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </button>
+          </div>
+          <div class="artist-info">
+            <div class="artist-cat">Artist</div>
+            <div class="artist-name">Michael Jackson</div>
+            <div class="artist-genre">Pop · Classic</div>
+          </div>
+        </div>
+
+        <!-- Artist 5: Bruno Mars -->
+        <div class="artist-card" onclick="playTrack(9)">
+          <div class="artist-portrait-wrap">
+            <div class="artist-portrait">
+              <div class="artist-portrait-inner">
+                <img src="https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/ed/46/bf/ed46bf4e-7cb9-965a-54f3-03059977fe6c/075679589293.jpg/600x600bb.jpg" alt="Bruno Mars">
+              </div>
+            </div>
+            <button class="satellite-cta" aria-label="Play Bruno Mars">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </button>
+          </div>
+          <div class="artist-info">
+            <div class="artist-cat">Artist</div>
+            <div class="artist-name">Bruno Mars</div>
+            <div class="artist-genre">Pop · R&amp;B</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         NEW RELEASES — Pill Carousel
+    ============================================================ -->
+    <section class="releases-section">
+      <div class="eyebrow section-eyebrow">
+        <span class="eyebrow-dot"></span>NEW RELEASES
+      </div>
+      <h2 class="section-title">Fresh from the studio</h2>
+
+      <div class="carousel-track" id="carouselTrack">
+        <div class="release-card" onclick="playTrack(0)">
+          <div class="release-card-bg" style="background-image: url('https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/e2/91/4d/e2914d0a-7f1d-f04c-fbf4-c50b38548838/196873638690.jpg/600x600bb.jpg')"></div>
+          <div class="release-overlay"></div>
+          <div class="release-content">
+            <div class="release-chip">New Single</div>
+            <div class="release-title">Choosin' Texas</div>
+            <div class="release-artist">Ella Langley</div>
+            <button class="release-play-btn">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+              Play
+            </button>
+          </div>
+        </div>
+
+        <div class="release-card" onclick="playTrack(1)">
+          <div class="release-card-bg" style="background-image: url('https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/a1/ba/64/a1ba6484-f462-1b88-ddff-d4c014d5f265/196874018361.jpg/600x600bb.jpg')"></div>
+          <div class="release-overlay"></div>
+          <div class="release-content">
+            <div class="release-chip">New Album</div>
+            <div class="release-title">Dandelion</div>
+            <div class="release-artist">Ella Langley</div>
+            <button class="release-play-btn">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+              Play
+            </button>
+          </div>
+        </div>
+
+        <div class="release-card" onclick="playTrack(6)">
+          <div class="release-card-bg" style="background-image: url('https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/25/fb/18/25fb1804-5862-1936-9d98-d8e7b5513413/24BMR0005677.rgb.jpg/600x600bb.jpg')"></div>
+          <div class="release-overlay"></div>
+          <div class="release-content">
+            <div class="release-chip">New Album</div>
+            <div class="release-title">Don't Mind If I Do</div>
+            <div class="release-artist">Riley Green</div>
+            <button class="release-play-btn">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+              Play
+            </button>
+          </div>
+        </div>
+
+        <div class="release-card" onclick="playTrack(7)">
+          <div class="release-card-bg" style="background-image: url('https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/c8/25/57/c825573e-48c8-262e-c801-108f848b0771/093624820291.jpg/600x600bb.jpg')"></div>
+          <div class="release-overlay"></div>
+          <div class="release-content">
+            <div class="release-chip">New Album</div>
+            <div class="release-title">Young</div>
+            <div class="release-artist">Dan + Shay</div>
+            <button class="release-play-btn">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+              Play
+            </button>
+          </div>
+        </div>
+
+        <div class="release-card" onclick="playTrack(9)">
+          <div class="release-card-bg" style="background-image: url('https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/ed/46/bf/ed46bf4e-7cb9-965a-54f3-03059977fe6c/075679589293.jpg/600x600bb.jpg')"></div>
+          <div class="release-overlay"></div>
+          <div class="release-content">
+            <div class="release-chip">New Album</div>
+            <div class="release-title">The Romantic</div>
+            <div class="release-artist">Bruno Mars</div>
+            <button class="release-play-btn">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+              Play
+            </button>
+          </div>
+        </div>
+
+        <div class="release-card" onclick="playTrack(8)">
+          <div class="release-card-bg" style="background-image: url('https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/32/4f/fd/324ffda2-9e51-8f6a-0c2d-c6fd2b41ac55/074643811224.jpg/600x600bb.jpg')"></div>
+          <div class="release-overlay"></div>
+          <div class="release-content">
+            <div class="release-chip">Classic Album</div>
+            <div class="release-title">Thriller</div>
+            <div class="release-artist">Michael Jackson</div>
+            <button class="release-play-btn">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+              Play
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="carousel-controls">
+        <button class="carousel-btn" id="carouselPrev" aria-label="Previous">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 5l-7 7 7 7"/>
+          </svg>
+        </button>
+        <button class="carousel-btn" id="carouselNext" aria-label="Next">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         TRENDING CHARTS
+    ============================================================ -->
+    <section class="charts-section" id="charts">
+      <div class="eyebrow section-eyebrow">
+        <span class="eyebrow-dot"></span>TRENDING CHARTS
+      </div>
+      <h2 class="charts-title">What the world is listening to</h2>
+
+      <div class="charts-grid">
+        <!-- Left column: ranks 1–5 -->
+        <div>
+          <div class="chart-item" onclick="playTrack(0)">
+            <span class="chart-rank">1</span>
+            <div class="chart-art"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/e2/91/4d/e2914d0a-7f1d-f04c-fbf4-c50b38548838/196873638690.jpg/100x100bb.jpg" alt=""></div>
+            <div class="chart-info">
+              <div class="chart-title">Choosin' Texas</div>
+              <div class="chart-artist">Ella Langley</div>
+            </div>
+            <div class="chart-duration">3:42</div>
+            <button class="chart-play-btn" aria-label="Play">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+            </button>
+          </div>
+
+          <div class="chart-item" onclick="playTrack(1)">
+            <span class="chart-rank">2</span>
+            <div class="chart-art"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/26/35/03/26350323-d656-4817-49e6-4d658af8363a/196874332917.jpg/100x100bb.jpg" alt=""></div>
+            <div class="chart-info">
+              <div class="chart-title">Be Her</div>
+              <div class="chart-artist">Ella Langley</div>
+            </div>
+            <div class="chart-duration">4:16</div>
+            <button class="chart-play-btn" aria-label="Play">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+            </button>
+          </div>
+
+          <div class="chart-item" onclick="playTrack(2)">
+            <span class="chart-rank">3</span>
+            <div class="chart-art"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/26/35/03/26350323-d656-4817-49e6-4d658af8363a/196874332917.jpg/100x100bb.jpg" alt=""></div>
+            <div class="chart-info">
+              <div class="chart-title">I Can't Love You Anymore</div>
+              <div class="chart-artist">Ella Langley &amp; Morgan Wallen</div>
+            </div>
+            <div class="chart-duration">5:08</div>
+            <button class="chart-play-btn" aria-label="Play">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+            </button>
+          </div>
+
+          <div class="chart-item" onclick="playTrack(3)">
+            <span class="chart-rank">4</span>
+            <div class="chart-art"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/62/33/40/62334080-6129-4d0c-086b-921cc956cb7a/196872090895.jpg/100x100bb.jpg" alt=""></div>
+            <div class="chart-info">
+              <div class="chart-title">you look like you love me</div>
+              <div class="chart-artist">Ella Langley &amp; Riley Green</div>
+            </div>
+            <div class="chart-duration">3:55</div>
+            <button class="chart-play-btn" aria-label="Play">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+            </button>
+          </div>
+
+          <div class="chart-item" onclick="playTrack(4)">
+            <span class="chart-rank">5</span>
+            <div class="chart-art"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/98/88/4b/98884ba1-fe25-76b8-211f-ebfb3d000fd5/093624838982.jpg/100x100bb.jpg" alt=""></div>
+            <div class="chart-info">
+              <div class="chart-title">The Fall</div>
+              <div class="chart-artist">Cody Johnson</div>
+            </div>
+            <div class="chart-duration">4:33</div>
+            <button class="chart-play-btn" aria-label="Play">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Right column: ranks 6–10 -->
+        <div>
+          <div class="chart-item" onclick="playTrack(5)">
+            <span class="chart-rank">6</span>
+            <div class="chart-art"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/66/61/a0/6661a0a6-a3cc-4f42-5b77-9fd0033db560/26UMGIM52826.rgb.jpg/100x100bb.jpg" alt=""></div>
+            <div class="chart-info">
+              <div class="chart-title">Hey There Sunshine</div>
+              <div class="chart-artist">Little Big Town</div>
+            </div>
+            <div class="chart-duration">3:21</div>
+            <button class="chart-play-btn" aria-label="Play">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+            </button>
+          </div>
+
+          <div class="chart-item" onclick="playTrack(6)">
+            <span class="chart-rank">7</span>
+            <div class="chart-art"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/25/fb/18/25fb1804-5862-1936-9d98-d8e7b5513413/24BMR0005677.rgb.jpg/100x100bb.jpg" alt=""></div>
+            <div class="chart-info">
+              <div class="chart-title">Don't Mind If I Do</div>
+              <div class="chart-artist">Riley Green</div>
+            </div>
+            <div class="chart-duration">2:58</div>
+            <button class="chart-play-btn" aria-label="Play">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+            </button>
+          </div>
+
+          <div class="chart-item" onclick="playTrack(7)">
+            <span class="chart-rank">8</span>
+            <div class="chart-art"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/c8/25/57/c825573e-48c8-262e-c801-108f848b0771/093624820291.jpg/100x100bb.jpg" alt=""></div>
+            <div class="chart-info">
+              <div class="chart-title">Say So</div>
+              <div class="chart-artist">Dan + Shay</div>
+            </div>
+            <div class="chart-duration">4:24</div>
+            <button class="chart-play-btn" aria-label="Play">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+            </button>
+          </div>
+
+          <div class="chart-item" onclick="playTrack(8)">
+            <span class="chart-rank">9</span>
+            <div class="chart-art"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/32/4f/fd/324ffda2-9e51-8f6a-0c2d-c6fd2b41ac55/074643811224.jpg/100x100bb.jpg" alt=""></div>
+            <div class="chart-info">
+              <div class="chart-title">Billie Jean</div>
+              <div class="chart-artist">Michael Jackson</div>
+            </div>
+            <div class="chart-duration">4:54</div>
+            <button class="chart-play-btn" aria-label="Play">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+            </button>
+          </div>
+
+          <div class="chart-item" onclick="playTrack(9)">
+            <span class="chart-rank">10</span>
+            <div class="chart-art"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/ed/46/bf/ed46bf4e-7cb9-965a-54f3-03059977fe6c/075679589293.jpg/100x100bb.jpg" alt=""></div>
+            <div class="chart-info">
+              <div class="chart-title">I Just Might</div>
+              <div class="chart-artist">Bruno Mars</div>
+            </div>
+            <div class="chart-duration">4:00</div>
+            <button class="chart-play-btn" aria-label="Play">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================================================
+       FOOTER — Ink Black
+  ============================================================ -->
+  <footer class="site-footer">
+    <h2 class="footer-headline">Your music, everywhere you go.</h2>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-col-header">Discover</div>
+        <ul class="footer-links">
+          <li><a href="#">New Releases ↗</a></li>
+          <li><a href="#">Trending Charts ↗</a></li>
+          <li><a href="#">Featured Playlists ↗</a></li>
+          <li><a href="#">Podcasts ↗</a></li>
+          <li><a href="#">Live Radio ↗</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-header">Your Library</div>
+        <ul class="footer-links">
+          <li><a href="#">Liked Songs ↗</a></li>
+          <li><a href="#">My Playlists ↗</a></li>
+          <li><a href="#">Following ↗</a></li>
+          <li><a href="#">Recently Played ↗</a></li>
+          <li><a href="#">Downloads ↗</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-header">For Artists</div>
+        <ul class="footer-links">
+          <li><a href="#">Artist Dashboard ↗</a></li>
+          <li><a href="#">Upload Music ↗</a></li>
+          <li><a href="#">Royalties ↗</a></li>
+          <li><a href="#">Analytics ↗</a></li>
+          <li><a href="#">Promote ↗</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-header">Support</div>
+        <ul class="footer-links">
+          <li><a href="#">Help Center ↗</a></li>
+          <li><a href="#">Contact Us ↗</a></li>
+          <li><a href="#">Privacy Policy ↗</a></li>
+          <li><a href="#">Terms of Service ↗</a></li>
+          <li><a href="#">Accessibility ↗</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copyright">© 2026 Aria Music. All rights reserved.</p>
+      <div class="footer-social">
+        <button class="footer-social-btn" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+            <rect x="2" y="2" width="20" height="20" rx="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+          </svg>
+        </button>
+        <button class="footer-social-btn" aria-label="X">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.91-5.622Zm-1.161 17.52h1.833L7.084 4.126H5.117Z"/>
+          </svg>
+        </button>
+        <button class="footer-social-btn" aria-label="YouTube">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M21.543 6.498C22 8.28 22 12 22 12s0 3.72-.457 5.502c-.254.985-.997 1.76-1.938 2.022C17.896 20 12 20 12 20s-5.893 0-7.605-.476c-.945-.266-1.687-1.04-1.938-2.022C2 15.72 2 12 2 12s0-3.72.457-5.502c.254-.985.997-1.76 1.938-2.022C6.107 4 12 4 12 4s5.896 0 7.605.476c.945.266 1.687 1.04 1.938 2.022ZM10 15.5l6-3.5-6-3.5v7Z"/>
+          </svg>
+        </button>
+        <button class="footer-social-btn" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/>
+            <circle cx="4" cy="4" r="2"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       STICKY MUSIC PLAYER
+  ============================================================ -->
+  <div class="player" id="player">
+    <!-- Left: track info -->
+    <div class="player-track">
+      <div class="player-art" id="playerArt"></div>
+      <div class="player-track-info">
+        <div class="player-track-title" id="playerTitle">Neon Reverie</div>
+        <div class="player-track-artist" id="playerArtist">Luna Park</div>
+      </div>
+      <button class="player-heart" id="playerHeart" onclick="toggleLike()" aria-label="Like">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="heartIcon">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Center: controls + progress -->
+    <div class="player-controls">
+      <div class="player-buttons">
+        <button class="ctrl-btn" onclick="prevTrack()" aria-label="Previous">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <polygon points="19,20 9,12 19,4"/><line x1="5" y1="4" x2="5" y2="20" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        </button>
+        <button class="ctrl-btn-play" id="playBtn" onclick="togglePlay()" aria-label="Play/Pause">
+          <svg viewBox="0 0 24 24" fill="currentColor" id="playIcon">
+            <polygon points="5,3 19,12 5,21"/>
+          </svg>
+        </button>
+        <button class="ctrl-btn" onclick="nextTrack()" aria-label="Next">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <polygon points="5,4 15,12 5,20"/><line x1="19" y1="4" x2="19" y2="20" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        </button>
+        <div class="playing-bars" id="playingBars">
+          <div class="pbar"></div>
+          <div class="pbar"></div>
+          <div class="pbar"></div>
+        </div>
+      </div>
+      <div class="player-progress">
+        <span class="player-time" id="currentTime">0:00</span>
+        <div class="progress-bar" id="progressBar" onclick="seekTrack(event)">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <span class="player-time" id="totalTime">3:42</span>
+      </div>
+    </div>
+
+    <!-- Right: volume -->
+    <div class="player-volume">
+      <button class="vol-btn" aria-label="Volume">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="11,5 6,9 2,9 2,15 6,15 11,19 11,5"/>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
+        </svg>
+      </button>
+      <div class="vol-bar" id="volBar" onclick="setVolume(event)">
+        <div class="vol-fill" id="volFill"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       JAVASCRIPT — Player + Carousel
+  ============================================================ -->
+  <script>
+    // Track data — Apple Music US Top 10 (2026-05-19)
+    const ART = 'https://is1-ssl.mzstatic.com/image/thumb/';
+    const tracks = [
+      { title: "Choosin' Texas",            artist: "Ella Langley",                 duration: 222, artwork: ART + "Music221/v4/e2/91/4d/e2914d0a-7f1d-f04c-fbf4-c50b38548838/196873638690.jpg" },
+      { title: "Be Her",                    artist: "Ella Langley",                 duration: 256, artwork: ART + "Music211/v4/26/35/03/26350323-d656-4817-49e6-4d658af8363a/196874332917.jpg" },
+      { title: "I Can't Love You Anymore",  artist: "Ella Langley & Morgan Wallen", duration: 308, artwork: ART + "Music211/v4/26/35/03/26350323-d656-4817-49e6-4d658af8363a/196874332917.jpg" },
+      { title: "you look like you love me", artist: "Ella Langley & Riley Green",   duration: 235, artwork: ART + "Music221/v4/62/33/40/62334080-6129-4d0c-086b-921cc956cb7a/196872090895.jpg" },
+      { title: "The Fall",                  artist: "Cody Johnson",                 duration: 273, artwork: ART + "Music221/v4/98/88/4b/98884ba1-fe25-76b8-211f-ebfb3d000fd5/093624838982.jpg" },
+      { title: "Hey There Sunshine",        artist: "Little Big Town",              duration: 201, artwork: ART + "Music211/v4/66/61/a0/6661a0a6-a3cc-4f42-5b77-9fd0033db560/26UMGIM52826.rgb.jpg" },
+      { title: "Don't Mind If I Do",        artist: "Riley Green",                  duration: 178, artwork: ART + "Music211/v4/25/fb/18/25fb1804-5862-1936-9d98-d8e7b5513413/24BMR0005677.rgb.jpg" },
+      { title: "Say So",                    artist: "Dan + Shay",                   duration: 264, artwork: ART + "Music211/v4/c8/25/57/c825573e-48c8-262e-c801-108f848b0771/093624820291.jpg" },
+      { title: "Billie Jean",               artist: "Michael Jackson",              duration: 294, artwork: ART + "Music115/v4/32/4f/fd/324ffda2-9e51-8f6a-0c2d-c6fd2b41ac55/074643811224.jpg" },
+      { title: "I Just Might",              artist: "Bruno Mars",                   duration: 240, artwork: ART + "Music211/v4/ed/46/bf/ed46bf4e-7cb9-965a-54f3-03059977fe6c/075679589293.jpg" },
+      { title: "Hey Jude",                  artist: "The Beatles",                  duration: 431, artwork: "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/f2/98/fb/f298fb48-1e0e-6ad4-4cff-fb824b77f02e/15UMGIM59587.rgb.jpg" },
+    ];
+
+    let currentIndex = 0;
+    let isPlaying    = false;
+    let currentSec   = 0;
+    let ticker       = null;
+    let liked        = false;
+
+    function fmt(s) {
+      return Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0');
+    }
+
+    function syncUI() {
+      const t = tracks[currentIndex];
+      document.getElementById('playerTitle').textContent  = t.title;
+      document.getElementById('playerArtist').textContent = t.artist;
+
+      const art = document.getElementById('playerArt');
+      art.className = 'player-art';
+      art.innerHTML = '<img src="' + t.artwork + '/100x100bb.jpg" alt="">';
+
+      document.getElementById('currentTime').textContent = fmt(currentSec);
+      document.getElementById('totalTime').textContent   = fmt(t.duration);
+
+      const pct = t.duration ? (currentSec / t.duration) * 100 : 0;
+      document.getElementById('progressFill').style.width = pct + '%';
+    }
+
+    function syncPlayBtn() {
+      const icon = document.getElementById('playIcon');
+      const bars = document.getElementById('playingBars');
+      if (isPlaying) {
+        icon.innerHTML = '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';
+        bars.classList.add('active');
+      } else {
+        icon.innerHTML = '<polygon points="5,3 19,12 5,21"/>';
+        bars.classList.remove('active');
+      }
+    }
+
+    function startTick() {
+      stopTick();
+      ticker = setInterval(() => {
+        const dur = tracks[currentIndex].duration;
+        if (currentSec < dur) {
+          currentSec++;
+          syncUI();
+        } else {
+          nextTrack();
+        }
+      }, 1000);
+    }
+
+    function stopTick() {
+      if (ticker) { clearInterval(ticker); ticker = null; }
+    }
+
+    function playTrack(idx) {
+      currentIndex = idx;
+      currentSec   = 0;
+      isPlaying    = true;
+      syncUI();
+      syncPlayBtn();
+      startTick();
+    }
+
+    function togglePlay() {
+      if (isPlaying) {
+        isPlaying = false;
+        stopTick();
+      } else {
+        isPlaying = true;
+        startTick();
+      }
+      syncPlayBtn();
+    }
+
+    function prevTrack() {
+      currentSec   = 0;
+      currentIndex = (currentIndex - 1 + tracks.length) % tracks.length;
+      syncUI();
+      if (isPlaying) startTick();
+    }
+
+    function nextTrack() {
+      currentSec   = 0;
+      currentIndex = (currentIndex + 1) % tracks.length;
+      syncUI();
+      if (isPlaying) startTick();
+    }
+
+    function seekTrack(e) {
+      const bar  = document.getElementById('progressBar');
+      const rect = bar.getBoundingClientRect();
+      const pct  = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      currentSec = Math.floor(pct * tracks[currentIndex].duration);
+      syncUI();
+    }
+
+    function setVolume(e) {
+      const bar  = document.getElementById('volBar');
+      const rect = bar.getBoundingClientRect();
+      const pct  = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      document.getElementById('volFill').style.width = (pct * 100) + '%';
+    }
+
+    function toggleLike() {
+      liked = !liked;
+      const btn  = document.getElementById('playerHeart');
+      const icon = document.getElementById('heartIcon');
+      btn.classList.toggle('liked', liked);
+      icon.setAttribute('fill',   liked ? '#CF4500' : 'none');
+      icon.setAttribute('stroke', liked ? '#CF4500' : 'currentColor');
+    }
+
+    // Carousel
+    const carousel   = document.getElementById('carouselTrack');
+    const CARD_STEP  = 294; // 270 card + 24 gap
+
+    document.getElementById('carouselNext').addEventListener('click', () => {
+      carousel.scrollBy({ left: CARD_STEP, behavior: 'smooth' });
+    });
+    document.getElementById('carouselPrev').addEventListener('click', () => {
+      carousel.scrollBy({ left: -CARD_STEP, behavior: 'smooth' });
+    });
+
+    // Init
+    syncUI();
+  </script>
+</body>
+</html>
