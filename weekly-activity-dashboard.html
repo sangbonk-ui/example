@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>나의 주간 활동 도우미</title>
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap');
+
+:root {
+  --canvas-warm: #FBF7F2; --canvas-cream: #F5EFE6; --surface-white: #FFFFFF;
+  --surface-card: #FEFCF9; --surface-overlay: rgba(60,45,30,0.55);
+  --warm-orange: #E8845A; --warm-orange-light: #F2A882; --warm-orange-pale: #FDE8D8;
+  --soft-amber: #F0B55A; --soft-amber-pale: #FEF3D8;
+  --warm-green: #6BAA7A; --warm-green-light: #8FC09B; --warm-green-pale: #E2F0E6;
+  --gentle-blue: #6A9BC4; --gentle-blue-light: #8FB5D4; --gentle-blue-pale: #DAE9F5;
+  --soft-lavender: #9B8EC4; --soft-lavender-light: #B5ABDA; --soft-lavender-pale: #EDEAF8;
+  --ink-dark: #2C2416; --ink-medium: #4A3C2A; --ink-soft: #7A6A52;
+  --ink-muted: #A89880; --ink-on-color: #FFFFFF;
+  --border-warm: #E8DDD0; --border-soft: #F0E8DC; --border-focus: #E8845A;
+  --today-glow: rgba(232,132,90,0.18); --today-border: #E8845A;
+  --today-header-bg: linear-gradient(135deg,#E8845A 0%,#D4713F 100%);
+  --header-gradient: linear-gradient(145deg,#F2C4A0 0%,#E8A882 30%,#D4A88C 60%,#C8B89A 100%);
+  --shadow-card: 0px 4px 20px rgba(100,70,40,0.08),0px 1px 4px rgba(100,70,40,0.04);
+  --shadow-card-hover: 0px 12px 40px rgba(100,70,40,0.14),0px 4px 12px rgba(100,70,40,0.08);
+  --shadow-today: 0px 8px 32px rgba(232,132,90,0.28),0px 2px 8px rgba(232,132,90,0.16);
+  --shadow-button: 0px 4px 16px rgba(232,132,90,0.32);
+  --shadow-button-green: 0px 4px 16px rgba(107,170,122,0.32);
+  --shadow-modal: 0px 24px 80px rgba(44,36,22,0.32),0px 8px 24px rgba(44,36,22,0.16);
+  --shadow-header: 0px 4px 24px rgba(100,70,40,0.12);
+  --radius-sm: 8px; --radius-md: 16px; --radius-lg: 24px; --radius-xl: 32px;
+  --radius-pill: 999px; --radius-full: 50%;
+  --space-xs: 6px; --space-sm: 12px; --space-md: 20px; --space-lg: 32px;
+  --space-xl: 48px; --space-2xl: 72px;
+  --font-family: 'Noto Sans KR',-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  --font-size-xs: 13px; --font-size-sm: 15px; --font-size-base: 18px;
+  --font-size-md: 20px; --font-size-lg: 22px; --font-size-xl: 26px;
+  --font-size-2xl: 32px; --font-size-3xl: 40px; --font-size-hero: 52px;
+  --font-weight-normal: 400; --font-weight-medium: 500;
+  --font-weight-semibold: 600; --font-weight-bold: 700;
+  --line-height-tight: 1.25; --line-height-base: 1.6; --line-height-relaxed: 1.75;
+  --transition-fast: 150ms ease; --transition-base: 240ms ease;
+  --transition-slow: 360ms ease; --transition-spring: 300ms cubic-bezier(0.34,1.56,0.64,1);
+}
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { font-size:var(--font-size-base); scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+body { font-family:var(--font-family); font-size:var(--font-size-base); font-weight:var(--font-weight-normal); line-height:var(--line-height-base); color:var(--ink-dark); background-color:var(--canvas-warm); min-height:100vh; -webkit-font-smoothing:antialiased; }
+.page-wrapper { max-width:1440px; margin:0 auto; padding:0 var(--space-lg); }
+.page-header { background:var(--header-gradient); padding:var(--space-2xl) var(--space-lg); text-align:center; position:relative; overflow:hidden; box-shadow:var(--shadow-header); }
+.page-header::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 60% 80% at 20% 50%,rgba(255,255,255,0.18) 0%,transparent 70%),radial-gradient(ellipse 40% 60% at 80% 30%,rgba(255,220,180,0.22) 0%,transparent 65%); pointer-events:none; }
+.page-header::after { content:'🌿'; position:absolute; font-size:180px; opacity:0.06; right:-20px; bottom:-30px; pointer-events:none; line-height:1; }
+.header-eyebrow { display:inline-block; font-size:var(--font-size-sm); font-weight:var(--font-weight-bold); letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-medium); background:rgba(255,255,255,0.45); padding:var(--space-xs) var(--space-sm); border-radius:var(--radius-pill); margin-bottom:var(--space-md); backdrop-filter:blur(4px); }
+.header-title { font-size:var(--font-size-hero); font-weight:var(--font-weight-bold); line-height:var(--line-height-tight); color:var(--ink-dark); letter-spacing:-0.02em; margin-bottom:var(--space-sm); position:relative; }
+.header-subtitle { font-size:var(--font-size-xl); font-weight:var(--font-weight-medium); color:var(--ink-medium); line-height:var(--line-height-base); max-width:520px; margin:0 auto var(--space-xl); position:relative; }
+.actions-bar { display:flex; align-items:center; justify-content:center; gap:var(--space-md); padding:var(--space-xl) var(--space-lg); flex-wrap:wrap; }
+.btn { display:inline-flex; align-items:center; justify-content:center; gap:var(--space-xs); font-family:var(--font-family); font-size:var(--font-size-lg); font-weight:var(--font-weight-semibold); line-height:1; border:none; cursor:pointer; padding:18px 36px; border-radius:var(--radius-pill); transition:transform var(--transition-spring),box-shadow var(--transition-base),background var(--transition-base); white-space:nowrap; }
+.btn:focus-visible { outline:3px solid var(--border-focus); outline-offset:3px; }
+.btn:active { transform:scale(0.97) !important; }
+.btn-primary { background:linear-gradient(135deg,var(--warm-orange) 0%,#D4713F 100%); color:var(--ink-on-color); box-shadow:var(--shadow-button); }
+.btn-primary:hover { background:linear-gradient(135deg,#EC9070 0%,#E8845A 100%); box-shadow:0px 8px 28px rgba(232,132,90,0.44); transform:translateY(-2px) scale(1.02); }
+.btn-secondary { background:linear-gradient(135deg,var(--warm-green) 0%,#559966 100%); color:var(--ink-on-color); box-shadow:var(--shadow-button-green); }
+.btn-secondary:hover { background:linear-gradient(135deg,#7DBE8C 0%,#6BAA7A 100%); box-shadow:0px 8px 28px rgba(107,170,122,0.44); transform:translateY(-2px) scale(1.02); }
+.btn-icon { font-size:1.2em; line-height:1; flex-shrink:0; }
+.weekly-section { padding:var(--space-md) 0 var(--space-2xl); }
+.weekly-section-label { font-size:var(--font-size-2xl); font-weight:var(--font-weight-bold); color:var(--ink-dark); letter-spacing:-0.01em; margin-bottom:var(--space-lg); padding:0 var(--space-lg); display:flex; align-items:center; gap:var(--space-sm); }
+.weekly-section-label::after { content:''; flex:1; height:2px; background:linear-gradient(90deg,var(--border-warm) 0%,transparent 100%); border-radius:var(--radius-pill); margin-left:var(--space-sm); }
+.days-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:var(--space-md); padding:0 var(--space-lg); align-items:start; }
+.day-card { background:var(--surface-card); border-radius:var(--radius-lg); border:1.5px solid var(--border-soft); box-shadow:var(--shadow-card); overflow:hidden; display:flex; flex-direction:column; transition:transform var(--transition-spring),box-shadow var(--transition-base),border-color var(--transition-base); cursor:default; }
+.day-card:hover { transform:translateY(-4px) scale(1.01); box-shadow:var(--shadow-card-hover); border-color:var(--border-warm); }
+.day-card--today { border:2.5px solid var(--today-border); box-shadow:var(--shadow-today); background:linear-gradient(180deg,#FFFAF6 0%,var(--surface-card) 100%); }
+.day-card--today:hover { box-shadow:var(--shadow-today),0px 16px 48px rgba(232,132,90,0.18); transform:translateY(-6px) scale(1.015); }
+.day-card__header { padding:var(--space-md) var(--space-md) var(--space-sm); background:var(--canvas-cream); border-bottom:1.5px solid var(--border-soft); display:flex; align-items:center; justify-content:space-between; gap:var(--space-xs); }
+.day-card--today .day-card__header { background:var(--today-header-bg); border-bottom-color:rgba(255,255,255,0.2); }
+.day-name { font-size:var(--font-size-xl); font-weight:var(--font-weight-bold); color:var(--ink-dark); letter-spacing:-0.01em; line-height:1; }
+.day-card--today .day-name { color:var(--ink-on-color); }
+.day-date { font-size:var(--font-size-sm); font-weight:var(--font-weight-medium); color:var(--ink-soft); line-height:1; }
+.day-card--today .day-date { color:rgba(255,255,255,0.85); }
+.today-badge { display:inline-flex; align-items:center; font-size:var(--font-size-xs); font-weight:var(--font-weight-bold); letter-spacing:0.06em; text-transform:uppercase; color:var(--warm-orange); background:rgba(255,255,255,0.9); padding:3px 10px; border-radius:var(--radius-pill); line-height:1.4; }
+.day-card__body { padding:var(--space-sm); display:flex; flex-direction:column; gap:var(--space-xs); flex:1; }
+.activity-row { display:flex; flex-direction:column; gap:4px; padding:var(--space-sm); border-radius:var(--radius-md); background:var(--surface-white); border:1px solid var(--border-soft); transition:background var(--transition-fast),border-color var(--transition-fast),transform var(--transition-spring); }
+.activity-row:hover { background:var(--canvas-cream); border-color:var(--border-warm); transform:translateX(2px); }
+.activity-row__top { display:flex; align-items:center; justify-content:space-between; gap:var(--space-xs); }
+.activity-title { font-size:var(--font-size-base); font-weight:var(--font-weight-medium); color:var(--ink-dark); line-height:var(--line-height-tight); word-break:keep-all; overflow-wrap:break-word; }
+.badge { display:inline-flex; align-items:center; gap:4px; font-size:var(--font-size-xs); font-weight:var(--font-weight-bold); letter-spacing:0.04em; padding:3px 9px; border-radius:var(--radius-pill); white-space:nowrap; flex-shrink:0; line-height:1.4; }
+.badge--학습 { background:var(--gentle-blue-pale); color:#3A6E9C; border:1px solid rgba(106,155,196,0.25); }
+.badge--건강 { background:var(--warm-green-pale); color:#3D7A50; border:1px solid rgba(107,170,122,0.25); }
+.badge--뉴스 { background:var(--soft-amber-pale); color:#9A6A14; border:1px solid rgba(240,181,90,0.28); }
+.badge--휴식 { background:var(--soft-lavender-pale); color:#5E4A9A; border:1px solid rgba(155,142,196,0.25); }
+.duration-pill { display:inline-flex; align-items:center; gap:3px; font-size:var(--font-size-xs); font-weight:var(--font-weight-semibold); color:var(--ink-soft); background:var(--canvas-cream); border:1px solid var(--border-warm); padding:3px 10px; border-radius:var(--radius-pill); white-space:nowrap; flex-shrink:0; line-height:1.4; }
+.duration-pill::before { content:'⏱'; font-size:11px; line-height:1; }
+.modal-overlay { position:fixed; inset:0; background:var(--surface-overlay); backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center; padding:var(--space-md); z-index:1000; opacity:0; visibility:hidden; transition:opacity var(--transition-slow),visibility var(--transition-slow); }
+.modal-overlay.is-open { opacity:1; visibility:visible; }
+.modal { background:var(--surface-white); border-radius:var(--radius-xl); box-shadow:var(--shadow-modal); width:100%; max-width:540px; max-height:90vh; overflow-y:auto; transform:translateY(24px) scale(0.97); transition:transform var(--transition-spring),opacity var(--transition-slow); opacity:0; }
+.modal-overlay.is-open .modal { transform:translateY(0) scale(1); opacity:1; }
+.modal__header { background:var(--today-header-bg); padding:var(--space-xl) var(--space-xl) var(--space-lg); display:flex; align-items:flex-start; justify-content:space-between; gap:var(--space-md); }
+.modal__title-group { display:flex; flex-direction:column; gap:var(--space-xs); }
+.modal__eyebrow { font-size:var(--font-size-sm); font-weight:var(--font-weight-bold); letter-spacing:0.08em; text-transform:uppercase; color:rgba(255,255,255,0.8); }
+.modal__title { font-size:var(--font-size-2xl); font-weight:var(--font-weight-bold); color:var(--ink-on-color); line-height:var(--line-height-tight); letter-spacing:-0.01em; }
+.modal__date { font-size:var(--font-size-md); font-weight:var(--font-weight-medium); color:rgba(255,255,255,0.82); }
+.modal__close { display:flex; align-items:center; justify-content:center; width:44px; height:44px; border-radius:var(--radius-full); background:rgba(255,255,255,0.22); border:1.5px solid rgba(255,255,255,0.3); color:var(--ink-on-color); font-size:var(--font-size-lg); cursor:pointer; transition:background var(--transition-base),transform var(--transition-spring); flex-shrink:0; line-height:1; }
+.modal__close:hover { background:rgba(255,255,255,0.36); transform:scale(1.08); }
+.modal__body { padding:var(--space-lg) var(--space-xl) var(--space-xl); display:flex; flex-direction:column; gap:var(--space-sm); }
+.modal__section-label { font-size:var(--font-size-md); font-weight:var(--font-weight-semibold); color:var(--ink-soft); margin-bottom:var(--space-xs); display:flex; align-items:center; gap:var(--space-xs); }
+.modal__section-label::before { content:''; display:block; width:4px; height:18px; background:var(--warm-orange); border-radius:var(--radius-pill); flex-shrink:0; }
+.modal__body .activity-title { font-size:var(--font-size-md); }
+.page-footer { background:var(--canvas-cream); border-top:1.5px solid var(--border-warm); padding:var(--space-xl) var(--space-lg); text-align:center; margin-top:var(--space-2xl); }
+.page-footer__text { font-size:var(--font-size-base); color:var(--ink-muted); line-height:var(--line-height-relaxed); }
+:focus-visible { outline:3px solid var(--border-focus); outline-offset:2px; border-radius:var(--radius-sm); }
+@media (max-width:1100px) { :root { --font-size-hero:40px; --font-size-3xl:32px; --font-size-2xl:28px; } .days-grid { grid-template-columns:repeat(2,1fr); gap:var(--space-md); } .day-card--today { grid-column:span 2; } .header-title { font-size:var(--font-size-3xl); } }
+@media (max-width:768px) { :root { --font-size-base:17px; --font-size-hero:34px; --font-size-2xl:26px; --font-size-xl:22px; } .page-wrapper { padding:0 var(--space-md); } .days-grid { grid-template-columns:repeat(2,1fr); gap:var(--space-sm); padding:0 var(--space-md); } .day-card--today { grid-column:span 2; } .actions-bar { flex-direction:column; align-items:stretch; padding:var(--space-lg) var(--space-md); } .btn { width:100%; font-size:var(--font-size-md); padding:18px 24px; } .modal { max-width:100%; border-radius:var(--radius-lg) var(--radius-lg) 0 0; max-height:92vh; } .modal-overlay { align-items:flex-end; padding:0; } }
+@media (max-width:480px) { :root { --font-size-base:17px; --font-size-hero:30px; --font-size-2xl:24px; --font-size-xl:20px; --font-size-lg:20px; } .page-wrapper { padding:0 var(--space-sm); } .page-header { padding:var(--space-xl) var(--space-md); } .header-title { font-size:var(--font-size-hero); } .days-grid { grid-template-columns:1fr; gap:var(--space-sm); padding:0 var(--space-sm); } .day-card--today { grid-column:span 1; } .day-name { font-size:var(--font-size-lg); } .actions-bar { padding:var(--space-md) var(--space-sm); gap:var(--space-sm); } .btn { font-size:var(--font-size-base); padding:16px 20px; } .modal__header { padding:var(--space-lg) var(--space-md) var(--space-md); } .modal__body { padding:var(--space-md) var(--space-md) var(--space-lg); } .modal__title { font-size:var(--font-size-xl); } }
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  background: var(--ink-dark);
+  color: var(--ink-on-color);
+  padding: 14px 24px;
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  box-shadow: var(--shadow-modal);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 2000;
+  pointer-events: none;
+}
+.toast--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Generate animation */
+@keyframes cardRefresh {
+  0%   { opacity: 1; transform: translateY(0); }
+  30%  { opacity: 0; transform: translateY(8px); }
+  70%  { opacity: 0; transform: translateY(-8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.day-card--refreshing {
+  animation: cardRefresh 0.6s ease forwards;
+}
+
+/* Modal activity detail rows */
+.modal-activity-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  background: var(--surface-white);
+  border: 1px solid var(--border-soft);
+}
+.modal-activity-row__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+}
+.modal-activity-row__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+}
+.time-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--warm-orange);
+  background: var(--warm-orange-pale);
+  border: 1px solid rgba(232,132,90,0.25);
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+  flex-shrink: 0;
+  line-height: 1.4;
+}
+.time-pill::before {
+  content: '🕐';
+  font-size: 11px;
+  line-height: 1;
+}
+.modal-activity-desc {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  color: var(--ink-soft);
+  line-height: var(--line-height-relaxed);
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+  </style>
+</head>
+<body>
+
+  <!-- Page Header -->
+  <header class="page-header">
+    <div class="page-wrapper">
+      <span class="header-eyebrow">AI 시니어 학습자용</span>
+      <h1 class="header-title">나의 주간 활동 도우미</h1>
+      <p class="header-subtitle">매일 조금씩, AI와 함께 건강하고 즐겁게 🌿</p>
+    </div>
+  </header>
+
+  <!-- Actions Bar -->
+  <div class="actions-bar">
+    <button id="btnGenerate" class="btn btn-primary">
+      <span class="btn-icon">🗓️</span> 주간 계획 생성
+    </button>
+    <button id="btnToday" class="btn btn-secondary">
+      <span class="btn-icon">☀️</span> 오늘의 활동 보기
+    </button>
+  </div>
+
+  <!-- Weekly Section -->
+  <section class="weekly-section">
+    <div class="page-wrapper">
+      <div class="weekly-section-label">이번 주 활동 계획</div>
+      <div class="days-grid" id="daysGrid">
+        <!-- Day cards rendered by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Today Modal -->
+  <div class="modal-overlay" id="todayModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <div class="modal__header" id="modalHeader">
+        <div class="modal__title-group">
+          <span class="modal__eyebrow">오늘의 활동</span>
+          <div class="modal__title" id="modalTitle">—</div>
+          <div class="modal__date" id="modalDate">—</div>
+        </div>
+        <button class="modal__close" id="modalClose" aria-label="닫기">×</button>
+      </div>
+      <div class="modal__body" id="modalBody">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- Footer -->
+  <footer class="page-footer">
+    <div class="page-wrapper">
+      <p class="page-footer__text">나의 주간 활동 도우미 · AI 시니어 학습자를 위해 만들어졌습니다 🌿<br>매일 조금씩 꾸준히 — 건강하고 즐거운 하루 되세요!</p>
+    </div>
+  </footer>
+
+  <script>
+    const weeklyPlan = [
+      { day:"월요일",dayEn:"Monday",emoji:"🌱",activities:[{category:"학습",categoryEmoji:"🤖",title:"AI란 무엇인가?",desc:"인공지능의 기본 개념을 쉬운 말로 설명한 유튜브 영상을 시청하며 AI가 일상에서 어떻게 쓰이는지 알아봅니다.",duration:"30분",time:"오전 10시"},{category:"건강",categoryEmoji:"🚶",title:"가벼운 동네 산책",desc:"아파트 단지나 공원을 천천히 걸으며 신선한 공기를 마시고 몸을 가볍게 풀어줍니다.",duration:"30분",time:"오전 9시"},{category:"뉴스",categoryEmoji:"📰",title:"AI 주간 뉴스 읽기",desc:"네이버 또는 다음 뉴스에서 'AI 인공지능' 키워드로 검색해 최신 기사 2~3편을 천천히 읽어봅니다.",duration:"20분",time:"오후 2시"},{category:"휴식&소통",categoryEmoji:"☕",title:"가족과 차 한잔",desc:"가족이나 가까운 친구에게 전화를 걸거나 함께 차를 마시며 오늘 배운 AI 이야기를 나눠봅니다.",duration:"40분",time:"오후 4시"}]},
+      { day:"화요일",dayEn:"Tuesday",emoji:"💬",activities:[{category:"학습",categoryEmoji:"💡",title:"챗GPT 처음 사용해보기",desc:"ChatGPT 웹사이트에 접속해 간단한 질문 하나를 입력하고 AI가 어떻게 대답하는지 직접 체험해봅니다.",duration:"30분",time:"오전 10시"},{category:"건강",categoryEmoji:"🧘",title:"실내 스트레칭",desc:"목, 어깨, 허리를 중심으로 의자에 앉아서도 할 수 있는 간단한 스트레칭으로 몸의 긴장을 풀어줍니다.",duration:"20분",time:"오전 8시 30분"},{category:"뉴스",categoryEmoji:"📺",title:"KBS 뉴스 시청",desc:"저녁 KBS 메인 뉴스를 시청하며 국내외 주요 소식을 편안하게 파악합니다.",duration:"30분",time:"오후 9시"},{category:"휴식&소통",categoryEmoji:"🎵",title:"좋아하는 음악 감상",desc:"유튜브 뮤직이나 멜론에서 좋아하는 옛 노래를 틀어놓고 편안하게 쉬는 시간을 가집니다.",duration:"40분",time:"오후 3시"}]},
+      { day:"수요일",dayEn:"Wednesday",emoji:"📖",activities:[{category:"학습",categoryEmoji:"🗣️",title:"AI 스피커 사용법 익히기",desc:"집에 있는 카카오미니나 네이버 클로바 같은 AI 스피커에게 날씨·음악·알람을 말로 요청해봅니다.",duration:"20분",time:"오전 11시"},{category:"건강",categoryEmoji:"🏊",title:"동네 수영장 또는 헬스장 방문",desc:"가까운 주민 센터 수영장이나 경로당 헬스실을 방문해 가볍게 몸을 움직여 체력을 기릅니다.",duration:"50분",time:"오전 9시"},{category:"뉴스",categoryEmoji:"🌐",title:"AI와 의료·건강 뉴스",desc:"AI가 병원에서 어떻게 활용되는지 관련 기사를 읽으며 건강과 기술의 연관성을 이해합니다.",duration:"20분",time:"오후 2시"},{category:"휴식&소통",categoryEmoji:"🃏",title:"경로당·복지관 모임 참여",desc:"동네 경로당이나 복지관에서 친구들과 화투나 보드게임을 즐기며 사회적 유대감을 나눕니다.",duration:"90분",time:"오후 3시"}]},
+      { day:"목요일",dayEn:"Thursday",emoji:"📸",activities:[{category:"학습",categoryEmoji:"🖼️",title:"AI 사진 보정 앱 체험",desc:"스마트폰의 AI 사진 자동 보정 기능이나 네이버 포토 앱을 써보며 AI가 사진을 어떻게 개선하는지 경험합니다.",duration:"25분",time:"오전 10시 30분"},{category:"건강",categoryEmoji:"🌿",title:"공원 맨손 체조",desc:"가까운 공원의 운동기구를 이용하거나 맨손 체조로 관절과 근육을 부드럽게 활성화합니다.",duration:"30분",time:"오전 8시"},{category:"뉴스",categoryEmoji:"💼",title:"AI와 일자리 변화 기사 읽기",desc:"AI로 인해 바뀌는 직업 환경에 대한 기사를 읽고 자녀·손자녀의 미래를 생각해봅니다.",duration:"20분",time:"오후 1시"},{category:"휴식&소통",categoryEmoji:"📞",title:"자녀·손자녀와 영상통화",desc:"카카오톡 영상통화로 자녀나 손자녀와 얼굴을 보며 안부를 묻고 오늘 배운 AI 이야기를 공유합니다.",duration:"30분",time:"오후 5시"}]},
+      { day:"금요일",dayEn:"Friday",emoji:"🔍",activities:[{category:"학습",categoryEmoji:"🛡️",title:"AI 사기·스팸 구별법 배우기",desc:"AI를 이용한 보이스피싱이나 딥페이크 사기를 알아보고 스스로를 지키는 방법을 공부합니다.",duration:"30분",time:"오전 10시"},{category:"건강",categoryEmoji:"🥗",title:"균형 잡힌 식단 준비",desc:"AI 레시피 앱(쿠킹하우스 등)을 활용해 제철 채소가 들어간 건강 점심 메뉴를 직접 만들어봅니다.",duration:"40분",time:"오전 11시"},{category:"뉴스",categoryEmoji:"🌏",title:"주간 국제 뉴스 요약 읽기",desc:"한 주 동안 세계에서 일어난 주요 사건을 정리한 주간 뉴스레터나 요약 기사를 읽습니다.",duration:"20분",time:"오후 2시"},{category:"휴식&소통",categoryEmoji:"🎬",title:"넷플릭스·OTT 영화 관람",desc:"가족과 함께 또는 혼자서 좋아하는 한국 영화나 드라마를 편안하게 감상하며 주말을 맞이합니다.",duration:"120분",time:"오후 7시"}]},
+      { day:"토요일",dayEn:"Saturday",emoji:"🌸",activities:[{category:"학습",categoryEmoji:"📚",title:"이번 주 AI 학습 복습",desc:"월요일부터 금요일까지 배운 AI 내용을 공책에 간단히 정리하며 기억을 되살리고 질문을 적어봅니다.",duration:"30분",time:"오전 10시"},{category:"건강",categoryEmoji:"🚴",title:"자전거 타기 또는 등산",desc:"날씨가 좋은 주말에 가벼운 자전거 나들이나 낮은 산 둘레길을 걸으며 자연 속에서 충전합니다.",duration:"60분",time:"오전 9시"},{category:"뉴스",categoryEmoji:"📡",title:"AI 미래 전망 영상 시청",desc:"유튜브에서 '미래의 AI 세상' 관련 다큐멘터리나 전문가 강연 영상을 찾아 흥미롭게 시청합니다.",duration:"40분",time:"오후 2시"},{category:"휴식&소통",categoryEmoji:"🍽️",title:"가족 외식 또는 집밥 나눔",desc:"가족이 모여 함께 식사를 하거나 이웃에게 음식을 나눠주며 따뜻한 주말 오후를 보냅니다.",duration:"90분",time:"오후 6시"}]},
+      { day:"일요일",dayEn:"Sunday",emoji:"☀️",activities:[{category:"학습",categoryEmoji:"🔮",title:"다음 주 AI 학습 계획 세우기",desc:"챗GPT에게 '다음 주에 AI에 대해 무엇을 배우면 좋을까요?'라고 질문하며 다음 주 학습 목표를 정합니다.",duration:"20분",time:"오전 11시"},{category:"건강",categoryEmoji:"🛀",title:"반신욕 또는 족욕",desc:"따뜻한 물에 족욕이나 반신욕을 하며 한 주간 쌓인 피로를 풀고 혈액순환을 돕습니다.",duration:"30분",time:"오후 4시"},{category:"뉴스",categoryEmoji:"📖",title:"주간 AI 트렌드 요약 읽기",desc:"'AI 타임스'나 'IT동아' 같은 IT 전문 매체에서 이번 주 AI 트렌드 요약 기사를 가볍게 읽습니다.",duration:"20분",time:"오전 10시"},{category:"휴식&소통",categoryEmoji:"🙏",title:"종교 활동 또는 명상",desc:"교회·절·성당 예배에 참여하거나 조용한 명상으로 한 주를 마무리하며 마음의 평화를 찾습니다.",duration:"60분",time:"오전 9시"}]}
+    ];
+
+    // Map JS Date.getDay() (0=Sun,1=Mon,...,6=Sat) to weeklyPlan index (0=Mon,...,6=Sun)
+    function getTodayPlanIndex() {
+      const jsDay = new Date().getDay(); // 0=Sun, 1=Mon, ..., 6=Sat
+      if (jsDay === 0) return 6; // Sunday -> index 6
+      return jsDay - 1;           // Mon=0, Tue=1, ..., Sat=5
+    }
+
+    function getBadgeClass(category) {
+      if (category === '학습') return 'badge--학습';
+      if (category === '건강') return 'badge--건강';
+      if (category === '뉴스') return 'badge--뉴스';
+      return 'badge--휴식';
+    }
+
+    function renderCards() {
+      const grid = document.getElementById('daysGrid');
+      const todayIdx = getTodayPlanIndex();
+      grid.innerHTML = '';
+
+      weeklyPlan.forEach((dayData, idx) => {
+        const isToday = idx === todayIdx;
+        const card = document.createElement('div');
+        card.className = 'day-card' + (isToday ? ' day-card--today' : '');
+        card.dataset.index = idx;
+
+        // Header
+        const headerHTML = `
+          <div class="day-card__header">
+            <div>
+              <div class="day-name">${dayData.emoji} ${dayData.day}</div>
+              <div class="day-date">${dayData.dayEn}</div>
+            </div>
+            ${isToday ? '<span class="today-badge">오늘</span>' : ''}
+          </div>
+        `;
+
+        // Body: activity rows
+        const activitiesHTML = dayData.activities.map(act => `
+          <div class="activity-row">
+            <div class="activity-row__top">
+              <span class="badge ${getBadgeClass(act.category)}">${act.categoryEmoji} ${act.category}</span>
+              <span class="duration-pill">${act.duration}</span>
+            </div>
+            <div class="activity-title">${act.title}</div>
+          </div>
+        `).join('');
+
+        card.innerHTML = headerHTML + `<div class="day-card__body">${activitiesHTML}</div>`;
+        grid.appendChild(card);
+      });
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('toast--visible');
+      setTimeout(() => {
+        toast.classList.remove('toast--visible');
+      }, 2500);
+    }
+
+    function openTodayModal() {
+      const todayIdx = getTodayPlanIndex();
+      const dayData = weeklyPlan[todayIdx];
+
+      document.getElementById('modalTitle').textContent = dayData.emoji + ' ' + dayData.day;
+      document.getElementById('modalDate').textContent = dayData.dayEn + ' · 오늘의 활동';
+
+      const body = document.getElementById('modalBody');
+      body.innerHTML = dayData.activities.map(act => `
+        <div class="modal-activity-row">
+          <div class="modal-activity-row__top">
+            <span class="badge ${getBadgeClass(act.category)}">${act.categoryEmoji} ${act.category}</span>
+            <div class="modal-activity-row__meta">
+              <span class="time-pill">${act.time}</span>
+              <span class="duration-pill">${act.duration}</span>
+            </div>
+          </div>
+          <div class="activity-title">${act.title}</div>
+          <div class="modal-activity-desc">${act.desc}</div>
+        </div>
+      `).join('');
+
+      document.getElementById('todayModal').classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      document.getElementById('todayModal').classList.remove('is-open');
+      document.body.style.overflow = '';
+    }
+
+    // Generate button: animate cards and show toast
+    document.getElementById('btnGenerate').addEventListener('click', () => {
+      const cards = document.querySelectorAll('.day-card');
+      cards.forEach((card, i) => {
+        card.style.animationDelay = (i * 40) + 'ms';
+        card.classList.remove('day-card--refreshing');
+        // Force reflow
+        void card.offsetWidth;
+        card.classList.add('day-card--refreshing');
+      });
+      // Clean up animation classes after animation ends
+      setTimeout(() => {
+        cards.forEach(card => {
+          card.classList.remove('day-card--refreshing');
+          card.style.animationDelay = '';
+        });
+      }, 800);
+      showToast('✅ 이번 주 계획이 준비되었습니다!');
+    });
+
+    // Today button: open modal
+    document.getElementById('btnToday').addEventListener('click', openTodayModal);
+
+    // Modal close button
+    document.getElementById('modalClose').addEventListener('click', closeModal);
+
+    // Close modal on overlay background click
+    document.getElementById('todayModal').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('todayModal')) {
+        closeModal();
+      }
+    });
+
+    // Escape key closes modal
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+    });
+
+    // Initial render
+    renderCards();
+  </script>
+</body>
+</html>

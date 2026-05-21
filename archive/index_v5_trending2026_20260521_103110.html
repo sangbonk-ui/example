@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aria — Music Streaming UI · Portfolio Project</title>
-  <meta name="description" content="Aria is a music streaming platform UI concept — a single-file portfolio project demonstrating advanced CSS design systems, JavaScript state machines, and responsive layout. Built with plain HTML, CSS, and JS.">
+  <title>Aria — Discover. Listen. Feel.</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sofia+Sans:ital,wght@0,1..1000;1,1..1000&display=swap" rel="stylesheet">
@@ -443,12 +442,11 @@
       border-radius: 50%;
     }
 
-    /* Artist portrait gradients — 2026 featured artists */
-    .artist-card:nth-child(1) .artist-portrait-inner { background: linear-gradient(135deg,#B8860B,#F4A01E 50%,#FFD700); }  /* Bruno Mars */
-    .artist-card:nth-child(2) .artist-portrait-inner { background: linear-gradient(135deg,#C65B1E,#F37338 40%,#FFAA6E); }  /* Ella Langley */
-    .artist-card:nth-child(3) .artist-portrait-inner { background: linear-gradient(135deg,#7B2D8B,#C2185B 50%,#F48FB1); }  /* Taylor Swift */
-    .artist-card:nth-child(4) .artist-portrait-inner { background: linear-gradient(135deg,#0f0f2d,#2C3E8C 50%,#7EB3E8); }  /* BTS */
-    .artist-card:nth-child(5) .artist-portrait-inner { background: linear-gradient(135deg,#3D0000,#C62828 50%,#FF8A65); }  /* Olivia Rodrigo */
+    .artist-card:nth-child(1) .artist-portrait-inner { background: linear-gradient(135deg,#FF6B6B,#FF8E53 50%,#FFC107); }
+    .artist-card:nth-child(2) .artist-portrait-inner { background: linear-gradient(135deg,#4A0E8F,#7B2D8B 40%,#C2185B); }
+    .artist-card:nth-child(3) .artist-portrait-inner { background: linear-gradient(135deg,#C98B00,#FFD100 50%,#FFE44D); }
+    .artist-card:nth-child(4) .artist-portrait-inner { background: linear-gradient(135deg,#B8860B,#DAA520 50%,#F0C040); }
+    .artist-card:nth-child(5) .artist-portrait-inner { background: linear-gradient(135deg,#1A237E,#283593 50%,#5C6BC0); }
 
     /* Satellite CTA — white circle docked bottom-right */
     .satellite-cta {
@@ -842,18 +840,12 @@
 
     .player-art img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 50%; }
 
-    /* Art gradients — matched to each artist's visual identity */
-    .art-1 { background: linear-gradient(135deg,#B8860B,#F4A01E,#FFD700); }  /* Bruno Mars — gold/soul */
-    .art-2 { background: linear-gradient(135deg,#C65B1E,#F37338,#FFAA6E); }  /* Ella Langley — warm country */
-    .art-3 { background: linear-gradient(135deg,#1a1a2e,#16213e,#6B8DD6); }  /* Harry Styles — deep indigo */
-    .art-4 { background: linear-gradient(135deg,#0D0D0D,#2D6A4F,#52B788); }  /* Bad Bunny — dark reggaeton green */
-    .art-5 { background: linear-gradient(135deg,#7B2D8B,#C2185B,#F48FB1); }  /* Taylor Swift — violet/rose */
-    .art-6 { background: linear-gradient(135deg,#0f0f2d,#2C3E8C,#7EB3E8); }  /* BTS — midnight blue */
-    .art-7 { background: linear-gradient(135deg,#1A0030,#8B1A8B,#FF69B4); }  /* BABYMONSTER — K-pop purple/pink */
-    .art-8 { background: linear-gradient(135deg,#3D0000,#C62828,#FF8A65); }  /* Olivia Rodrigo — blood red */
-    .art-9 { background: linear-gradient(135deg,#1B3A1B,#2E7D32,#A5D6A7); }  /* Alex Warren — indie green */
-    .art-10{ background: linear-gradient(135deg,#0D1B3E,#1565C0,#90CAF9); }  /* NCT WISH — K-pop blue */
-    .art-11{ background: linear-gradient(135deg,#2D2D2D,#795548,#BCAAA4); }  /* Ophelia — earthy brown */
+    .art-1 { background: linear-gradient(135deg,#FF6B6B,#FFC107); }
+    .art-2 { background: linear-gradient(135deg,#4A0E8F,#a78bfa); }
+    .art-3 { background: linear-gradient(135deg,#C98B00,#FFD100); }
+    .art-4 { background: linear-gradient(135deg,#B8860B,#F0C040); }
+    .art-5 { background: linear-gradient(135deg,#1A237E,#5C6BC0); }
+    .art-6 { background: linear-gradient(135deg,#880E4F,#F06292); }
 
     .player-track-info { flex: 1; min-width: 0; }
 
@@ -1074,106 +1066,6 @@
     .hero-content > *:nth-child(3) { animation-delay: 0.28s; }
     .hero-content > *:nth-child(4) { animation-delay: 0.38s; }
     .hero-content > *:nth-child(5) { animation-delay: 0.48s; }
-
-    /* ==========================================
-       ABOUT / PORTFOLIO SECTION
-    ========================================== */
-    .about-section {
-      background: var(--ink-black);
-      padding: 100px 48px 96px;
-    }
-
-    .about-inner {
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-
-    .about-section .eyebrow { color: var(--light-signal-orange); }
-    .about-section .eyebrow-dot { background: var(--light-signal-orange); }
-    .about-section .section-eyebrow { margin-bottom: 20px; }
-
-    .about-title {
-      font-size: 48px;
-      font-weight: 500;
-      letter-spacing: -0.96px;
-      color: var(--white);
-      line-height: 1.1;
-      margin-bottom: 20px;
-    }
-
-    .about-desc {
-      font-size: 17px;
-      font-weight: 450;
-      color: rgba(255,255,255,0.55);
-      max-width: 560px;
-      line-height: 1.6;
-      margin-bottom: 56px;
-    }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 24px;
-      margin-bottom: 48px;
-    }
-
-    .about-card {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.10);
-      border-radius: 20px;
-      padding: 28px 24px;
-      transition: background 0.2s;
-    }
-    .about-card:hover { background: rgba(255,255,255,0.09); }
-
-    .about-card-icon {
-      font-size: 28px;
-      margin-bottom: 16px;
-      line-height: 1;
-    }
-
-    .about-card-title {
-      font-size: 16px;
-      font-weight: 500;
-      letter-spacing: -0.32px;
-      color: var(--white);
-      margin-bottom: 10px;
-    }
-
-    .about-card-body {
-      font-size: 13px;
-      font-weight: 450;
-      color: rgba(255,255,255,0.5);
-      line-height: 1.55;
-    }
-
-    .about-tech {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .tech-chip {
-      display: inline-block;
-      border: 1px solid rgba(255,255,255,0.22);
-      border-radius: 999px;
-      padding: 6px 16px;
-      font-size: 13px;
-      font-weight: 500;
-      color: rgba(255,255,255,0.75);
-      letter-spacing: 0.1px;
-    }
-
-    @media (max-width: 900px) {
-      .about-section { padding: 80px 24px 72px; }
-      .about-title { font-size: 36px; letter-spacing: -0.72px; }
-      .about-grid { grid-template-columns: 1fr 1fr; }
-    }
-
-    @media (max-width: 480px) {
-      .about-grid { grid-template-columns: 1fr; }
-      .about-title { font-size: 28px; }
-    }
   </style>
 </head>
 <body>
@@ -1189,10 +1081,10 @@
       </a>
       <ul class="nav-links">
         <li><a href="#" class="active">Discover</a></li>
-        <li><a href="#artists">Artists</a></li>
-        <li><a href="#releases">Releases</a></li>
+        <li><a href="#">Browse</a></li>
+        <li><a href="#">Artists</a></li>
         <li><a href="#charts">Charts</a></li>
-        <li><a href="#about">About</a></li>
+        <li><a href="#">Podcasts</a></li>
       </ul>
       <div class="nav-actions">
         <button class="nav-icon-btn" aria-label="Search">
@@ -1220,41 +1112,39 @@
         <div class="hero-glow hero-glow-2"></div>
         <div class="hero-glow hero-glow-3"></div>
 
-        <!-- Hero visual: Bruno Mars gold gradient pill -->
-        <div class="hero-visual" style="background: linear-gradient(to top, #5a3a00, #B8860B, #FFD700 90%); overflow: hidden;">
-          <span class="hero-visual-emoji" role="img" aria-hidden="true">🎤</span>
+        <div class="hero-visual" style="background: url('https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/1a/19/db/1a19db26-17ad-b986-11a9-f72ac7a6194b/18UMGIM31214.rgb.jpg/600x600bb.jpg') center top / cover; overflow: hidden;">
         </div>
 
         <div class="hero-content">
           <div class="eyebrow hero-eyebrow">
             <span class="eyebrow-dot"></span>FEATURED TRACK
           </div>
-          <h1 class="hero-title">I Just Might</h1>
+          <h1 class="hero-title">Yesterday</h1>
           <p class="hero-subtitle">
-            Bruno Mars returns after nearly a decade — his debut solo album's lead single
-            hit #1 on the Billboard Hot 100 and topped the Billboard 200 simultaneously in 2026.
+            폴 매카트니가 꿈에서 얻은 멜로디. 역사상 가장 많이 커버된 팝송으로,
+            The Beatles의 1965년 불멸의 발라드.
           </p>
           <div class="hero-ctas">
-            <button class="btn-primary" onclick="playTrack(0)" aria-label="Play I Just Might by Bruno Mars">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <button class="btn-primary" onclick="playTrack(10)">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
                 <polygon points="5,3 19,12 5,21"/>
               </svg>
               Play Now
             </button>
-            <button class="btn-secondary" aria-label="Add I Just Might to your library">Add to Library</button>
+            <button class="btn-secondary">Add to Library</button>
           </div>
           <div class="hero-stats">
             <div>
-              <div class="hero-stat-value">3:58</div>
+              <div class="hero-stat-value">2:05</div>
               <div class="hero-stat-label">Duration</div>
             </div>
             <div>
-              <div class="hero-stat-value">2026</div>
+              <div class="hero-stat-value">1965</div>
               <div class="hero-stat-label">Released</div>
             </div>
             <div>
               <div class="hero-stat-value">#1</div>
-              <div class="hero-stat-label">Hot 100</div>
+              <div class="hero-stat-label">커버 3,000+</div>
             </div>
           </div>
         </div>
@@ -1264,7 +1154,7 @@
     <!-- ============================================================
          FEATURED ARTISTS — Circular Portraits + Orbital Arcs
     ============================================================ -->
-    <section class="artists-section" id="artists">
+    <section class="artists-section">
       <div class="eyebrow section-eyebrow">
         <span class="eyebrow-dot"></span>FEATURED ARTISTS
       </div>
@@ -1280,108 +1170,108 @@
           <path d="M 1100 250 Q 1270 410 1420 220" fill="none" stroke="#F37338" stroke-width="1.5" opacity="0.55"/>
         </svg>
 
-        <!-- Artist 1: Bruno Mars -->
+        <!-- Artist 1: Ella Langley -->
         <div class="artist-card" onclick="playTrack(0)">
           <div class="artist-portrait-wrap">
             <div class="artist-portrait">
-              <div class="artist-portrait-inner" aria-label="Bruno Mars">
-                <span style="position:relative;z-index:2;font-size:80px;" role="img" aria-hidden="true">🎤</span>
+              <div class="artist-portrait-inner">
+                <img src="https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/26/35/03/26350323-d656-4817-49e6-4d658af8363a/196874332917.jpg/600x600bb.jpg" alt="Ella Langley">
               </div>
             </div>
-            <button class="satellite-cta" onclick="event.stopPropagation();playTrack(0)" aria-label="Play Bruno Mars — I Just Might">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <polygon points="6,3 20,12 6,21"/>
+            <button class="satellite-cta" aria-label="Play Ella Langley">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
               </svg>
             </button>
           </div>
           <div class="artist-info">
-            <div class="artist-cat">Hot 100 #1</div>
-            <div class="artist-name">Bruno Mars</div>
-            <div class="artist-genre">Pop · R&amp;B · Soul</div>
-          </div>
-        </div>
-
-        <!-- Artist 2: Ella Langley -->
-        <div class="artist-card" onclick="playTrack(1)">
-          <div class="artist-portrait-wrap">
-            <div class="artist-portrait">
-              <div class="artist-portrait-inner" aria-label="Ella Langley">
-                <span style="position:relative;z-index:2;font-size:80px;" role="img" aria-hidden="true">🤠</span>
-              </div>
-            </div>
-            <button class="satellite-cta" onclick="event.stopPropagation();playTrack(1)" aria-label="Play Ella Langley — Choosin' Texas">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <polygon points="6,3 20,12 6,21"/>
-              </svg>
-            </button>
-          </div>
-          <div class="artist-info">
-            <div class="artist-cat">10 Weeks #1</div>
+            <div class="artist-cat">Artist</div>
             <div class="artist-name">Ella Langley</div>
             <div class="artist-genre">Country · Pop</div>
           </div>
         </div>
 
-        <!-- Artist 3: Taylor Swift -->
+        <!-- Artist 2: Cody Johnson -->
         <div class="artist-card" onclick="playTrack(4)">
           <div class="artist-portrait-wrap">
             <div class="artist-portrait">
-              <div class="artist-portrait-inner" aria-label="Taylor Swift">
-                <span style="position:relative;z-index:2;font-size:80px;" role="img" aria-hidden="true">✨</span>
+              <div class="artist-portrait-inner">
+                <img src="https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/98/88/4b/98884ba1-fe25-76b8-211f-ebfb3d000fd5/093624838982.jpg/600x600bb.jpg" alt="Cody Johnson">
               </div>
             </div>
-            <button class="satellite-cta" onclick="event.stopPropagation();playTrack(4)" aria-label="Play Taylor Swift — Opalite">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <polygon points="6,3 20,12 6,21"/>
+            <button class="satellite-cta" aria-label="Play Cody Johnson">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
               </svg>
             </button>
           </div>
           <div class="artist-info">
-            <div class="artist-cat">Hot 100 #1</div>
-            <div class="artist-name">Taylor Swift</div>
-            <div class="artist-genre">Pop · Country</div>
+            <div class="artist-cat">Artist</div>
+            <div class="artist-name">Cody Johnson</div>
+            <div class="artist-genre">Country · Americana</div>
           </div>
         </div>
 
-        <!-- Artist 4: BTS -->
-        <div class="artist-card" onclick="playTrack(5)">
+        <!-- Artist 3: Riley Green -->
+        <div class="artist-card" onclick="playTrack(6)">
           <div class="artist-portrait-wrap">
             <div class="artist-portrait">
-              <div class="artist-portrait-inner" aria-label="BTS">
-                <span style="position:relative;z-index:2;font-size:80px;" role="img" aria-hidden="true">💜</span>
+              <div class="artist-portrait-inner">
+                <img src="https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/25/fb/18/25fb1804-5862-1936-9d98-d8e7b5513413/24BMR0005677.rgb.jpg/600x600bb.jpg" alt="Riley Green">
               </div>
             </div>
-            <button class="satellite-cta" onclick="event.stopPropagation();playTrack(5)" aria-label="Play BTS — Swim">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <polygon points="6,3 20,12 6,21"/>
+            <button class="satellite-cta" aria-label="Play Riley Green">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
               </svg>
             </button>
           </div>
           <div class="artist-info">
-            <div class="artist-cat">K-Pop · #1</div>
-            <div class="artist-name">BTS</div>
-            <div class="artist-genre">K-Pop · Hip-Hop</div>
+            <div class="artist-cat">Artist</div>
+            <div class="artist-name">Riley Green</div>
+            <div class="artist-genre">Country · Folk</div>
           </div>
         </div>
 
-        <!-- Artist 5: Olivia Rodrigo -->
-        <div class="artist-card" onclick="playTrack(7)">
+        <!-- Artist 4: Michael Jackson -->
+        <div class="artist-card" onclick="playTrack(8)">
           <div class="artist-portrait-wrap">
             <div class="artist-portrait">
-              <div class="artist-portrait-inner" aria-label="Olivia Rodrigo">
-                <span style="position:relative;z-index:2;font-size:80px;" role="img" aria-hidden="true">🎸</span>
+              <div class="artist-portrait-inner">
+                <img src="https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/32/4f/fd/324ffda2-9e51-8f6a-0c2d-c6fd2b41ac55/074643811224.jpg/600x600bb.jpg" alt="Michael Jackson">
               </div>
             </div>
-            <button class="satellite-cta" onclick="event.stopPropagation();playTrack(7)" aria-label="Play Olivia Rodrigo — Drop Dead">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <polygon points="6,3 20,12 6,21"/>
+            <button class="satellite-cta" aria-label="Play Michael Jackson">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
               </svg>
             </button>
           </div>
           <div class="artist-info">
-            <div class="artist-cat">Trending</div>
-            <div class="artist-name">Olivia Rodrigo</div>
-            <div class="artist-genre">Pop · Alt-Rock</div>
+            <div class="artist-cat">Artist</div>
+            <div class="artist-name">Michael Jackson</div>
+            <div class="artist-genre">Pop · Classic</div>
+          </div>
+        </div>
+
+        <!-- Artist 5: Bruno Mars -->
+        <div class="artist-card" onclick="playTrack(9)">
+          <div class="artist-portrait-wrap">
+            <div class="artist-portrait">
+              <div class="artist-portrait-inner">
+                <img src="https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/ed/46/bf/ed46bf4e-7cb9-965a-54f3-03059977fe6c/075679589293.jpg/600x600bb.jpg" alt="Bruno Mars">
+              </div>
+            </div>
+            <button class="satellite-cta" aria-label="Play Bruno Mars">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </button>
+          </div>
+          <div class="artist-info">
+            <div class="artist-cat">Artist</div>
+            <div class="artist-name">Bruno Mars</div>
+            <div class="artist-genre">Pop · R&amp;B</div>
           </div>
         </div>
 
@@ -1391,104 +1281,96 @@
     <!-- ============================================================
          NEW RELEASES — Pill Carousel
     ============================================================ -->
-    <section class="releases-section" id="releases">
+    <section class="releases-section">
       <div class="eyebrow section-eyebrow">
         <span class="eyebrow-dot"></span>NEW RELEASES
       </div>
       <h2 class="section-title">Fresh from the studio</h2>
 
       <div class="carousel-track" id="carouselTrack">
-
-        <!-- Release 1: Bruno Mars — I Just Might -->
         <div class="release-card" onclick="playTrack(0)">
-          <div class="release-card-bg" style="background: linear-gradient(160deg, #3a2000 0%, #B8860B 50%, #FFD700 100%);"></div>
+          <div class="release-card-bg" style="background-image: url('https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/e2/91/4d/e2914d0a-7f1d-f04c-fbf4-c50b38548838/196873638690.jpg/600x600bb.jpg')"></div>
           <div class="release-overlay"></div>
           <div class="release-content">
-            <div class="release-chip">Hot 100 #1</div>
-            <div class="release-title">I Just Might</div>
-            <div class="release-artist">Bruno Mars</div>
-            <button class="release-play-btn" aria-label="Play I Just Might by Bruno Mars">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5,3 19,12 5,21"/></svg>
-              Play
-            </button>
-          </div>
-        </div>
-
-        <!-- Release 2: Ella Langley — Choosin' Texas -->
-        <div class="release-card" onclick="playTrack(1)">
-          <div class="release-card-bg" style="background: linear-gradient(160deg, #5a1a00 0%, #C65B1E 50%, #FFAA6E 100%);"></div>
-          <div class="release-overlay"></div>
-          <div class="release-content">
-            <div class="release-chip">10 Weeks #1</div>
+            <div class="release-chip">New Single</div>
             <div class="release-title">Choosin' Texas</div>
             <div class="release-artist">Ella Langley</div>
-            <button class="release-play-btn" aria-label="Play Choosin' Texas by Ella Langley">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5,3 19,12 5,21"/></svg>
+            <button class="release-play-btn">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
               Play
             </button>
           </div>
         </div>
 
-        <!-- Release 3: Harry Styles — Aperture -->
-        <div class="release-card" onclick="playTrack(2)">
-          <div class="release-card-bg" style="background: linear-gradient(160deg, #050510 0%, #1a1a2e 50%, #6B8DD6 100%);"></div>
+        <div class="release-card" onclick="playTrack(1)">
+          <div class="release-card-bg" style="background-image: url('https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/a1/ba/64/a1ba6484-f462-1b88-ddff-d4c014d5f265/196874018361.jpg/600x600bb.jpg')"></div>
           <div class="release-overlay"></div>
           <div class="release-content">
             <div class="release-chip">New Album</div>
-            <div class="release-title">Aperture</div>
-            <div class="release-artist">Harry Styles</div>
-            <button class="release-play-btn" aria-label="Play Aperture by Harry Styles">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5,3 19,12 5,21"/></svg>
+            <div class="release-title">Dandelion</div>
+            <div class="release-artist">Ella Langley</div>
+            <button class="release-play-btn">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
               Play
             </button>
           </div>
         </div>
 
-        <!-- Release 4: Bad Bunny — DtMF -->
-        <div class="release-card" onclick="playTrack(3)">
-          <div class="release-card-bg" style="background: linear-gradient(160deg, #020e06 0%, #0D6B2F 50%, #52B788 100%);"></div>
+        <div class="release-card" onclick="playTrack(6)">
+          <div class="release-card-bg" style="background-image: url('https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/25/fb/18/25fb1804-5862-1936-9d98-d8e7b5513413/24BMR0005677.rgb.jpg/600x600bb.jpg')"></div>
           <div class="release-overlay"></div>
           <div class="release-content">
-            <div class="release-chip">Super Bowl #1</div>
-            <div class="release-title">DtMF</div>
-            <div class="release-artist">Bad Bunny</div>
-            <button class="release-play-btn" aria-label="Play DtMF by Bad Bunny">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5,3 19,12 5,21"/></svg>
+            <div class="release-chip">New Album</div>
+            <div class="release-title">Don't Mind If I Do</div>
+            <div class="release-artist">Riley Green</div>
+            <button class="release-play-btn">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
               Play
             </button>
           </div>
         </div>
 
-        <!-- Release 5: Taylor Swift — Opalite -->
-        <div class="release-card" onclick="playTrack(4)">
-          <div class="release-card-bg" style="background: linear-gradient(160deg, #2d0030 0%, #7B2D8B 50%, #F48FB1 100%);"></div>
+        <div class="release-card" onclick="playTrack(7)">
+          <div class="release-card-bg" style="background-image: url('https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/c8/25/57/c825573e-48c8-262e-c801-108f848b0771/093624820291.jpg/600x600bb.jpg')"></div>
           <div class="release-overlay"></div>
           <div class="release-content">
-            <div class="release-chip">Hot 100 #1</div>
-            <div class="release-title">Opalite</div>
-            <div class="release-artist">Taylor Swift</div>
-            <button class="release-play-btn" aria-label="Play Opalite by Taylor Swift">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5,3 19,12 5,21"/></svg>
+            <div class="release-chip">New Album</div>
+            <div class="release-title">Young</div>
+            <div class="release-artist">Dan + Shay</div>
+            <button class="release-play-btn">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
               Play
             </button>
           </div>
         </div>
 
-        <!-- Release 6: BTS — Swim -->
-        <div class="release-card" onclick="playTrack(5)">
-          <div class="release-card-bg" style="background: linear-gradient(160deg, #020412 0%, #0f0f2d 50%, #7EB3E8 100%);"></div>
+        <div class="release-card" onclick="playTrack(9)">
+          <div class="release-card-bg" style="background-image: url('https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/ed/46/bf/ed46bf4e-7cb9-965a-54f3-03059977fe6c/075679589293.jpg/600x600bb.jpg')"></div>
           <div class="release-overlay"></div>
           <div class="release-content">
-            <div class="release-chip">K-Pop #1</div>
-            <div class="release-title">Swim</div>
-            <div class="release-artist">BTS</div>
-            <button class="release-play-btn" aria-label="Play Swim by BTS">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5,3 19,12 5,21"/></svg>
+            <div class="release-chip">New Album</div>
+            <div class="release-title">The Romantic</div>
+            <div class="release-artist">Bruno Mars</div>
+            <button class="release-play-btn">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
               Play
             </button>
           </div>
         </div>
 
+        <div class="release-card" onclick="playTrack(8)">
+          <div class="release-card-bg" style="background-image: url('https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/32/4f/fd/324ffda2-9e51-8f6a-0c2d-c6fd2b41ac55/074643811224.jpg/600x600bb.jpg')"></div>
+          <div class="release-overlay"></div>
+          <div class="release-content">
+            <div class="release-chip">Classic Album</div>
+            <div class="release-title">Thriller</div>
+            <div class="release-artist">Michael Jackson</div>
+            <button class="release-play-btn">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+              Play
+            </button>
+          </div>
+        </div>
       </div>
 
       <div class="carousel-controls">
@@ -1515,70 +1397,70 @@
       <h2 class="charts-title">What the world is listening to</h2>
 
       <div class="charts-grid">
-        <!-- Left column: ranks 1–5 (Billboard Hot 100, May 2026) -->
+        <!-- Left column: ranks 1–5 -->
         <div>
           <div class="chart-item" onclick="playTrack(0)">
             <span class="chart-rank">1</span>
-            <div class="chart-art" style="background:linear-gradient(135deg,#B8860B,#FFD700);" aria-hidden="true"><span style="font-size:22px;">🎤</span></div>
-            <div class="chart-info">
-              <div class="chart-title">I Just Might</div>
-              <div class="chart-artist">Bruno Mars</div>
-            </div>
-            <div class="chart-duration">3:58</div>
-            <button class="chart-play-btn" onclick="event.stopPropagation();playTrack(0)" aria-label="Play I Just Might by Bruno Mars">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5,3 19,12 5,21"/></svg>
-            </button>
-          </div>
-
-          <div class="chart-item" onclick="playTrack(1)">
-            <span class="chart-rank">2</span>
-            <div class="chart-art" style="background:linear-gradient(135deg,#C65B1E,#FFAA6E);" aria-hidden="true"><span style="font-size:22px;">🤠</span></div>
+            <div class="chart-art"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/e2/91/4d/e2914d0a-7f1d-f04c-fbf4-c50b38548838/196873638690.jpg/100x100bb.jpg" alt=""></div>
             <div class="chart-info">
               <div class="chart-title">Choosin' Texas</div>
               <div class="chart-artist">Ella Langley</div>
             </div>
             <div class="chart-duration">3:42</div>
-            <button class="chart-play-btn" onclick="event.stopPropagation();playTrack(1)" aria-label="Play Choosin' Texas by Ella Langley">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5,3 19,12 5,21"/></svg>
+            <button class="chart-play-btn" aria-label="Play">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+            </button>
+          </div>
+
+          <div class="chart-item" onclick="playTrack(1)">
+            <span class="chart-rank">2</span>
+            <div class="chart-art"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/26/35/03/26350323-d656-4817-49e6-4d658af8363a/196874332917.jpg/100x100bb.jpg" alt=""></div>
+            <div class="chart-info">
+              <div class="chart-title">Be Her</div>
+              <div class="chart-artist">Ella Langley</div>
+            </div>
+            <div class="chart-duration">4:16</div>
+            <button class="chart-play-btn" aria-label="Play">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
             </button>
           </div>
 
           <div class="chart-item" onclick="playTrack(2)">
             <span class="chart-rank">3</span>
-            <div class="chart-art" style="background:linear-gradient(135deg,#1a1a2e,#6B8DD6);" aria-hidden="true"><span style="font-size:22px;">🌊</span></div>
+            <div class="chart-art"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/26/35/03/26350323-d656-4817-49e6-4d658af8363a/196874332917.jpg/100x100bb.jpg" alt=""></div>
             <div class="chart-info">
-              <div class="chart-title">Aperture</div>
-              <div class="chart-artist">Harry Styles</div>
+              <div class="chart-title">I Can't Love You Anymore</div>
+              <div class="chart-artist">Ella Langley &amp; Morgan Wallen</div>
             </div>
-            <div class="chart-duration">4:12</div>
-            <button class="chart-play-btn" onclick="event.stopPropagation();playTrack(2)" aria-label="Play Aperture by Harry Styles">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5,3 19,12 5,21"/></svg>
+            <div class="chart-duration">5:08</div>
+            <button class="chart-play-btn" aria-label="Play">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
             </button>
           </div>
 
           <div class="chart-item" onclick="playTrack(3)">
             <span class="chart-rank">4</span>
-            <div class="chart-art" style="background:linear-gradient(135deg,#0D6B2F,#52B788);" aria-hidden="true"><span style="font-size:22px;">🐰</span></div>
+            <div class="chart-art"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/62/33/40/62334080-6129-4d0c-086b-921cc956cb7a/196872090895.jpg/100x100bb.jpg" alt=""></div>
             <div class="chart-info">
-              <div class="chart-title">DtMF</div>
-              <div class="chart-artist">Bad Bunny</div>
+              <div class="chart-title">you look like you love me</div>
+              <div class="chart-artist">Ella Langley &amp; Riley Green</div>
             </div>
-            <div class="chart-duration">3:29</div>
-            <button class="chart-play-btn" onclick="event.stopPropagation();playTrack(3)" aria-label="Play DtMF by Bad Bunny">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5,3 19,12 5,21"/></svg>
+            <div class="chart-duration">3:55</div>
+            <button class="chart-play-btn" aria-label="Play">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
             </button>
           </div>
 
           <div class="chart-item" onclick="playTrack(4)">
             <span class="chart-rank">5</span>
-            <div class="chart-art" style="background:linear-gradient(135deg,#7B2D8B,#F48FB1);" aria-hidden="true"><span style="font-size:22px;">✨</span></div>
+            <div class="chart-art"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/98/88/4b/98884ba1-fe25-76b8-211f-ebfb3d000fd5/093624838982.jpg/100x100bb.jpg" alt=""></div>
             <div class="chart-info">
-              <div class="chart-title">Opalite</div>
-              <div class="chart-artist">Taylor Swift</div>
+              <div class="chart-title">The Fall</div>
+              <div class="chart-artist">Cody Johnson</div>
             </div>
-            <div class="chart-duration">3:51</div>
-            <button class="chart-play-btn" onclick="event.stopPropagation();playTrack(4)" aria-label="Play Opalite by Taylor Swift">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5,3 19,12 5,21"/></svg>
+            <div class="chart-duration">4:33</div>
+            <button class="chart-play-btn" aria-label="Play">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
             </button>
           </div>
         </div>
@@ -1587,118 +1469,72 @@
         <div>
           <div class="chart-item" onclick="playTrack(5)">
             <span class="chart-rank">6</span>
-            <div class="chart-art" style="background:linear-gradient(135deg,#0f0f2d,#7EB3E8);" aria-hidden="true"><span style="font-size:22px;">💜</span></div>
+            <div class="chart-art"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/66/61/a0/6661a0a6-a3cc-4f42-5b77-9fd0033db560/26UMGIM52826.rgb.jpg/100x100bb.jpg" alt=""></div>
             <div class="chart-info">
-              <div class="chart-title">Swim</div>
-              <div class="chart-artist">BTS</div>
+              <div class="chart-title">Hey There Sunshine</div>
+              <div class="chart-artist">Little Big Town</div>
             </div>
-            <div class="chart-duration">3:44</div>
-            <button class="chart-play-btn" onclick="event.stopPropagation();playTrack(5)" aria-label="Play Swim by BTS">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5,3 19,12 5,21"/></svg>
+            <div class="chart-duration">3:21</div>
+            <button class="chart-play-btn" aria-label="Play">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
             </button>
           </div>
 
           <div class="chart-item" onclick="playTrack(6)">
             <span class="chart-rank">7</span>
-            <div class="chart-art" style="background:linear-gradient(135deg,#1A0030,#FF69B4);" aria-hidden="true"><span style="font-size:22px;">👾</span></div>
+            <div class="chart-art"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/25/fb/18/25fb1804-5862-1936-9d98-d8e7b5513413/24BMR0005677.rgb.jpg/100x100bb.jpg" alt=""></div>
             <div class="chart-info">
-              <div class="chart-title">CHOOM</div>
-              <div class="chart-artist">BABYMONSTER</div>
+              <div class="chart-title">Don't Mind If I Do</div>
+              <div class="chart-artist">Riley Green</div>
             </div>
-            <div class="chart-duration">3:17</div>
-            <button class="chart-play-btn" onclick="event.stopPropagation();playTrack(6)" aria-label="Play CHOOM by BABYMONSTER">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5,3 19,12 5,21"/></svg>
+            <div class="chart-duration">2:58</div>
+            <button class="chart-play-btn" aria-label="Play">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
             </button>
           </div>
 
           <div class="chart-item" onclick="playTrack(7)">
             <span class="chart-rank">8</span>
-            <div class="chart-art" style="background:linear-gradient(135deg,#3D0000,#FF8A65);" aria-hidden="true"><span style="font-size:22px;">🎸</span></div>
+            <div class="chart-art"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/c8/25/57/c825573e-48c8-262e-c801-108f848b0771/093624820291.jpg/100x100bb.jpg" alt=""></div>
             <div class="chart-info">
-              <div class="chart-title">Drop Dead</div>
-              <div class="chart-artist">Olivia Rodrigo</div>
+              <div class="chart-title">Say So</div>
+              <div class="chart-artist">Dan + Shay</div>
             </div>
-            <div class="chart-duration">3:05</div>
-            <button class="chart-play-btn" onclick="event.stopPropagation();playTrack(7)" aria-label="Play Drop Dead by Olivia Rodrigo">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5,3 19,12 5,21"/></svg>
+            <div class="chart-duration">4:24</div>
+            <button class="chart-play-btn" aria-label="Play">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
             </button>
           </div>
 
           <div class="chart-item" onclick="playTrack(8)">
             <span class="chart-rank">9</span>
-            <div class="chart-art" style="background:linear-gradient(135deg,#1B3A1B,#A5D6A7);" aria-hidden="true"><span style="font-size:22px;">🌿</span></div>
+            <div class="chart-art"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/32/4f/fd/324ffda2-9e51-8f6a-0c2d-c6fd2b41ac55/074643811224.jpg/100x100bb.jpg" alt=""></div>
             <div class="chart-info">
-              <div class="chart-title">Ordinary</div>
-              <div class="chart-artist">Alex Warren</div>
+              <div class="chart-title">Billie Jean</div>
+              <div class="chart-artist">Michael Jackson</div>
             </div>
-            <div class="chart-duration">3:33</div>
-            <button class="chart-play-btn" onclick="event.stopPropagation();playTrack(8)" aria-label="Play Ordinary by Alex Warren">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5,3 19,12 5,21"/></svg>
+            <div class="chart-duration">4:54</div>
+            <button class="chart-play-btn" aria-label="Play">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
             </button>
           </div>
 
           <div class="chart-item" onclick="playTrack(9)">
             <span class="chart-rank">10</span>
-            <div class="chart-art" style="background:linear-gradient(135deg,#0D1B3E,#90CAF9);" aria-hidden="true"><span style="font-size:22px;">🌙</span></div>
+            <div class="chart-art"><img src="https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/ed/46/bf/ed46bf4e-7cb9-965a-54f3-03059977fe6c/075679589293.jpg/100x100bb.jpg" alt=""></div>
             <div class="chart-info">
-              <div class="chart-title">Ode to Love</div>
-              <div class="chart-artist">NCT WISH</div>
+              <div class="chart-title">I Just Might</div>
+              <div class="chart-artist">Bruno Mars</div>
             </div>
-            <div class="chart-duration">3:28</div>
-            <button class="chart-play-btn" onclick="event.stopPropagation();playTrack(9)" aria-label="Play Ode to Love by NCT WISH">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5,3 19,12 5,21"/></svg>
+            <div class="chart-duration">4:00</div>
+            <button class="chart-play-btn" aria-label="Play">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
             </button>
           </div>
         </div>
       </div>
     </section>
   </main>
-
-  <!-- ============================================================
-       ABOUT / PORTFOLIO SECTION
-  ============================================================ -->
-  <section class="about-section" id="about" aria-label="About this project">
-    <div class="about-inner">
-      <div class="eyebrow section-eyebrow">
-        <span class="eyebrow-dot"></span>PORTFOLIO PROJECT
-      </div>
-      <h2 class="about-title">Built to demonstrate<br>what's possible with pure web tech.</h2>
-      <p class="about-desc">
-        Aria is a fully interactive music streaming UI — no frameworks, no build tools, no dependencies.
-        Every pixel is plain HTML, CSS, and JavaScript in a single file.
-      </p>
-      <div class="about-grid">
-        <div class="about-card">
-          <div class="about-card-icon" aria-hidden="true">🎨</div>
-          <div class="about-card-title">Design System</div>
-          <div class="about-card-body">Mastercard-inspired token system. CSS custom properties, constrained border-radius zones, atmospheric shadows, and a strict typographic scale — no raw hex values in any rule.</div>
-        </div>
-        <div class="about-card">
-          <div class="about-card-icon" aria-hidden="true">⚙️</div>
-          <div class="about-card-title">Player State Machine</div>
-          <div class="about-card-body">Fully functional playback engine: play/pause/skip, seek bar, volume control, like toggle, and a real-time progress ticker — all in vanilla JavaScript without a single library.</div>
-        </div>
-        <div class="about-card">
-          <div class="about-card-icon" aria-hidden="true">📱</div>
-          <div class="about-card-title">Responsive Layout</div>
-          <div class="about-card-body">Mobile-first breakpoints. The sticky player adapts, nav collapses, the hero visual hides on small screens, and the charts switch from two columns to one — all via CSS media queries.</div>
-        </div>
-        <div class="about-card">
-          <div class="about-card-icon" aria-hidden="true">♿</div>
-          <div class="about-card-title">Accessibility</div>
-          <div class="about-card-body">ARIA labels on all interactive controls, semantic HTML landmarks, keyboard-navigable player buttons, and sufficient color contrast across both light and dark surfaces.</div>
-        </div>
-      </div>
-      <div class="about-tech">
-        <span class="tech-chip">HTML5</span>
-        <span class="tech-chip">CSS Custom Properties</span>
-        <span class="tech-chip">Vanilla JavaScript</span>
-        <span class="tech-chip">CSS Grid &amp; Flexbox</span>
-        <span class="tech-chip">CSS Animations</span>
-        <span class="tech-chip">Single-File Architecture</span>
-      </div>
-    </div>
-  </section>
 
   <!-- ============================================================
        FOOTER — Ink Black
@@ -1846,20 +1682,20 @@
        JAVASCRIPT — Player + Carousel
   ============================================================ -->
   <script>
-    // Track data — Global Trending / Billboard Hot 100 (May 2026)
-    // artClass maps to .art-N CSS gradient defined above
+    // Track data — Apple Music US Top 10 (2026-05-19)
+    const ART = 'https://is1-ssl.mzstatic.com/image/thumb/';
     const tracks = [
-      { title: "I Just Might",         artist: "Bruno Mars",      duration: 238, artClass: "art-1" },
-      { title: "Choosin' Texas",       artist: "Ella Langley",    duration: 222, artClass: "art-2" },
-      { title: "Aperture",             artist: "Harry Styles",    duration: 252, artClass: "art-3" },
-      { title: "DtMF",                 artist: "Bad Bunny",       duration: 209, artClass: "art-4" },
-      { title: "Opalite",              artist: "Taylor Swift",    duration: 231, artClass: "art-5" },
-      { title: "Swim",                 artist: "BTS",             duration: 224, artClass: "art-6" },
-      { title: "CHOOM",                artist: "BABYMONSTER",     duration: 197, artClass: "art-7" },
-      { title: "Drop Dead",            artist: "Olivia Rodrigo",  duration: 185, artClass: "art-8" },
-      { title: "Ordinary",             artist: "Alex Warren",     duration: 213, artClass: "art-9" },
-      { title: "Ode to Love",          artist: "NCT WISH",        duration: 208, artClass: "art-10"},
-      { title: "The Fate of Ophelia",  artist: "Ella Langley",    duration: 247, artClass: "art-11"},
+      { title: "Choosin' Texas",            artist: "Ella Langley",                 duration: 222, artwork: ART + "Music221/v4/e2/91/4d/e2914d0a-7f1d-f04c-fbf4-c50b38548838/196873638690.jpg" },
+      { title: "Be Her",                    artist: "Ella Langley",                 duration: 256, artwork: ART + "Music211/v4/26/35/03/26350323-d656-4817-49e6-4d658af8363a/196874332917.jpg" },
+      { title: "I Can't Love You Anymore",  artist: "Ella Langley & Morgan Wallen", duration: 308, artwork: ART + "Music211/v4/26/35/03/26350323-d656-4817-49e6-4d658af8363a/196874332917.jpg" },
+      { title: "you look like you love me", artist: "Ella Langley & Riley Green",   duration: 235, artwork: ART + "Music221/v4/62/33/40/62334080-6129-4d0c-086b-921cc956cb7a/196872090895.jpg" },
+      { title: "The Fall",                  artist: "Cody Johnson",                 duration: 273, artwork: ART + "Music221/v4/98/88/4b/98884ba1-fe25-76b8-211f-ebfb3d000fd5/093624838982.jpg" },
+      { title: "Hey There Sunshine",        artist: "Little Big Town",              duration: 201, artwork: ART + "Music211/v4/66/61/a0/6661a0a6-a3cc-4f42-5b77-9fd0033db560/26UMGIM52826.rgb.jpg" },
+      { title: "Don't Mind If I Do",        artist: "Riley Green",                  duration: 178, artwork: ART + "Music211/v4/25/fb/18/25fb1804-5862-1936-9d98-d8e7b5513413/24BMR0005677.rgb.jpg" },
+      { title: "Say So",                    artist: "Dan + Shay",                   duration: 264, artwork: ART + "Music211/v4/c8/25/57/c825573e-48c8-262e-c801-108f848b0771/093624820291.jpg" },
+      { title: "Billie Jean",               artist: "Michael Jackson",              duration: 294, artwork: ART + "Music115/v4/32/4f/fd/324ffda2-9e51-8f6a-0c2d-c6fd2b41ac55/074643811224.jpg" },
+      { title: "I Just Might",              artist: "Bruno Mars",                   duration: 240, artwork: ART + "Music211/v4/ed/46/bf/ed46bf4e-7cb9-965a-54f3-03059977fe6c/075679589293.jpg" },
+      { title: "Yesterday",                  artist: "The Beatles",                  duration: 125, artwork: "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/1a/19/db/1a19db26-17ad-b986-11a9-f72ac7a6194b/18UMGIM31214.rgb.jpg" },
     ];
 
     let currentIndex = 0;
@@ -1877,10 +1713,9 @@
       document.getElementById('playerTitle').textContent  = t.title;
       document.getElementById('playerArtist').textContent = t.artist;
 
-      // Use CSS gradient class — no external image dependency
       const art = document.getElementById('playerArt');
-      art.className = 'player-art ' + t.artClass;
-      art.innerHTML = '';
+      art.className = 'player-art';
+      art.innerHTML = '<img src="' + t.artwork + '/100x100bb.jpg" alt="">';
 
       document.getElementById('currentTime').textContent = fmt(currentSec);
       document.getElementById('totalTime').textContent   = fmt(t.duration);
